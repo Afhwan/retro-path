@@ -972,21 +972,17 @@ function startPath() {
   const level = levels[currentLevel];
   if (!level) return;
 
-  // Check that we have a path from start to end
+  // Cari jalur dari START
   const path = findPath();
-  if (!path || path.length === 0) {
-    notify('Tempatkan blok jalan dulu!');
-    return;
-  }
 
-  // Check that end position is reachable
-  const last = path[path.length - 1];
-  if (last.r !== level.end.r || last.c !== level.end.c) {
+  // Kalau gak ada jalur atau belum sampai END → lose life
+  if (!path || path.length === 0 || path[path.length - 1].r !== level.end.r || path[path.length - 1].c !== level.end.c) {
     loseLife();
     return;
   }
 
   isAnimating = true;
+  Sound.startPath();
   document.getElementById('startBtn').textContent = '⏳ BERJALAN...';
 
   // Animate character along the path
