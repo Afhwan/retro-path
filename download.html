@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unduh Retro Path</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0f0f1a;
+      color: #e8e8f0;
+      font-family: 'Press Start 2P', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container { text-align: center; max-width: 500px; }
+    h1 { font-size: 24px; letter-spacing: 6px; text-shadow: 3px 3px 0 #2d2d44; }
+    h1 span { color: #ff6b35; font-size: 20px; display: block; margin-top: 6px; text-shadow: 3px 3px 0 #c0392b; }
+    .sub { font-size: 8px; color: #c4c4d4; margin: 14px 0 30px; letter-spacing: 4px; }
+    .items { display: flex; flex-direction: column; gap: 14px; }
+    .card {
+      border: 3px solid #2d2d44;
+      background: #1a1a2e;
+      padding: 20px;
+      text-align: center;
+    }
+    .card .platform { font-size: 10px; margin-bottom: 6px; }
+    .card .desc { font-size: 7px; color: #c4c4d4; margin-bottom: 12px; line-height: 1.6; }
+    .btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px;
+      padding: 14px 20px;
+      border: 3px solid var(--c, #ff6b35);
+      background: transparent;
+      color: var(--c, #ff6b35);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      box-shadow: 4px 4px 0 rgba(255,107,53,0.3);
+      transition: all 0.05s;
+    }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(255,107,53,0.3); }
+    .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 rgba(255,107,53,0.3); }
+    .back {
+      margin-top: 24px;
+      font-size: 9px;
+      padding: 10px 16px;
+      border: 2px solid #2d2d44;
+      background: transparent;
+      color: #c4c4d4;
+      cursor: pointer;
+      font-family: 'Press Start 2P', monospace;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .back:hover { border-color: #4ecdc4; color: #4ecdc4; }
+    .footer { font-size: 6px; color: #2d2d44; margin-top: 20px; }
+    .footer a { color: #4ecdc4; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>RETRO<br><span>PATH</span></h1>
+    <p class="sub">~ Unduh Game ~</p>
+
+    <div class="items">
+      <div class="card">
+        <div class="platform" style="color:#ff6b35;">LINUX</div>
+        <div class="desc">AppImage — Download & jalankan langsung<br>Tanpa instalasi, tinggal klik dua kali.</div>
+        <a href="https://github.com/Afhwan/retro-path/releases/latest/download/Retro-Path-1.0.0.AppImage" class="btn" style="--c:#ff6b35;" target="_blank">UNDUH APPIMAGE</a>
+      </div>
+      <div class="card">
+        <div class="platform" style="color:#3498db;">WINDOWS</div>
+        <div class="desc">Installer .exe — Setup untuk Windows<br>Proses instalasi standar Windows.</div>
+        <a href="https://github.com/Afhwan/retro-path/releases/latest/download/Retro-Path-Setup-1.0.0.exe" class="btn" style="--c:#3498db;" target="_blank">UNDUH .EXE</a>
+      </div>
+    </div>
+
+    <a href="/" class="back">< KEMBALI</a>
+    <p class="footer">Buka <a href="https://github.com/Afhwan/retro-path" target="_blank">GitHub</a> untuk info rilis terbaru</p>
+  </div>
+</body>
+</html>

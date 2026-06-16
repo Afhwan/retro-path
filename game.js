@@ -1349,13 +1349,10 @@ document.addEventListener('keydown', function nameKeyHandler(e) {
   }
 });
 
-// Allow download screen without name check
-let bypassNameCheck = false;
-
 // Override showScreen to check player name
 const _origShowScreen = showScreen;
 showScreen = function(id) {
-  if ((id === 'game-screen' || id === 'shop-screen') && !bypassNameCheck) {
+  if (id === 'game-screen' || id === 'shop-screen') {
     const name = getPlayerName();
     if (!name) {
       document.getElementById('name-modal').classList.remove('hidden');
@@ -1383,25 +1380,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initLevel(0);
   animateLava();
   
-  // Cek parameter ?download=1 (dulu, sebelum name modal)
-  const urlParams = new URLSearchParams(window.location.search);
-  const isDownload = urlParams.get('download') === '1';
-  
-  // Cek nama pemain (skip kalau download)
+  // Cek nama pemain
   const name = getPlayerName();
-  if (!name && !isDownload) {
+  if (!name) {
     document.getElementById('name-modal').classList.remove('hidden');
     setTimeout(() => {
       const input = document.getElementById('nameInput');
       if (input) input.focus();
     }, 300);
-  }
-  
-  // Auto-buka download screen
-  if (isDownload) {
-    bypassNameCheck = true;
-    setTimeout(() => {
-      showScreen('download-screen');
-    }, 100);
   }
 });
