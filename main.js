@@ -54,7 +54,10 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 960,
     height: 720,
-    resizable: false,
+    minWidth: 720,
+    minHeight: 540,
+    resizable: true,
+    fullscreenable: true,
     title: 'Retro Path',
     backgroundColor: '#0f0f1a',
     webPreferences: {
@@ -68,6 +71,13 @@ function createWindow() {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+  });
+
+  // Fullscreen shortcut F11
+  mainWindow.webContents.on('before-input-event', (e, input) => {
+    if (input.key === 'F11') {
+      mainWindow.setFullScreen(!mainWindow.isFullScreen());
+    }
   });
 
   // Cek update setelah window siap
