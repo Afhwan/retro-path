@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Path</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- CRT Scanline Overlay -->
+  <div class="crt-overlay"></div>
+
+  <!-- Main Menu -->
+  <div id="main-menu" class="screen active">
+    <div class="title-container">
+      <h1 class="game-title">
+        <span class="title-line">RETRO</span>
+        <span class="title-line accent">PATH</span>
+      </h1>
+      <p class="subtitle">~ Puzzle Strategi ~</p>
+    </div>
+    <div class="menu-buttons">
+      <button class="retro-btn primary" onclick="Sound.uiClick(); showScreen('game-screen'); initLevel(currentLevel);">MAIN</button>
+      <button class="retro-btn" onclick="Sound.uiClick(); showScreen('shop-screen'); renderShop();">TOKO</button>
+    </div>
+    <div class="menu-footer">
+      <p>TEKAN <span class="key-hint">SPASI</span> UNTUK MAIN</p>
+    </div>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game-screen" class="screen">
+    <div class="game-hud">
+      <div class="hud-left">
+        <span class="coin-display">🪙 <span id="coin-count">0</span></span>
+        <span class="gem-display">💎 <span id="gem-count">0</span></span>
+      </div>
+      <div class="hud-center">
+        <span class="level-display">LEVEL <span id="level-number">1</span></span>
+      </div>
+      <div class="hud-right">
+        <button class="hud-btn" id="muteBtn" onclick="toggleSound()" title="Suara">🔊</button>
+        <button class="hud-btn" onclick="showScreen('main-menu'); Sound.screenTransition();" title="Menu">✕</button>
+      </div>
+    </div>
+
+    <div class="game-area">
+      <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <div class="block-inventory">
+      <div class="inventory-label">BLOK JALAN:</div>
+      <div id="block-slots" class="block-slots"></div>
+    </div>
+
+    <div class="game-controls">
+      <button class="retro-btn primary" id="startBtn" onclick="Sound.startPath(); startPath()">▶ MULAI</button>
+      <button class="retro-btn" onclick="Sound.uiClick(); resetBoard()">↺ RESET</button>
+      <button class="retro-btn hint-btn" id="hintBtn" onclick="Sound.hint(); useHint()">💡 PETUNJUK</button>
+    </div>
+  </div>
+
+  <!-- Shop Screen -->
+  <div id="shop-screen" class="screen">
+    <div class="shop-hud">
+      <h2 class="shop-title">TOKO</h2>
+      <div class="shop-balance">
+        <span>🪙 <span id="shop-coins">0</span></span>
+        <span>💎 <span id="shop-gems">0</span></span>
+      </div>
+    </div>
+
+    <div class="shop-tabs">
+      <button class="shop-tab active" data-category="currency" onclick="switchShopTab('currency')">Mata Uang</button>
+      <button class="shop-tab" data-category="packs" onclick="switchShopTab('packs')">Paket Level</button>
+      <button class="shop-tab" data-category="hints" onclick="switchShopTab('hints')">Bantuan</button>
+      <button class="shop-tab" data-category="costumes" onclick="switchShopTab('costumes')">Kostum</button>
+    </div>
+
+    <div id="shop-items" class="shop-items"></div>
+
+    <div class="shop-history">
+      <h3 onclick="toggleHistory()">Riwayat Transaksi ▾</h3>
+      <div id="transaction-history" class="transaction-list"></div>
+    </div>
+
+    <button class="retro-btn back-btn" onclick="showScreen('main-menu')">← KEMBALI</button>
+  </div>
+
+  <!-- Notification Overlay -->
+  <div id="notification" class="notification hidden"></div>
+
+  <!-- Level Complete Modal -->
+  <div id="level-complete" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h2 class="modal-title">LEVEL SELESAI!</h2>
+      <p>Kamu mendapatkan</p>
+      <p class="reward-display">🪙 +<span id="reward-coins">0</span></p>
+      <button class="retro-btn primary" onclick="Sound.uiClick(); nextLevel()">LEVEL BERIKUTNYA →</button>
+    </div>
+  </div>
+
+  <script src="sound.js"></script>
+  <script src="shop.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

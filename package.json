@@ -1,0 +1,41 @@
+{
+  "name": "retro-path",
+  "version": "1.0.0",
+  "description": "Retro Path - Puzzle Strategy Game",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.retropath.game",
+    "productName": "Retro Path",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": null
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Game"
+    }
+  },
+  "keywords": [
+    "game",
+    "puzzle",
+    "retro",
+    "pixel-art"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^42.4.0",
+    "electron-builder": "^26.15.3"
+  }
+}
