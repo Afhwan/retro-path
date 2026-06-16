@@ -30,6 +30,7 @@ const T = {
   CROSS: 13,       // ┼
   PATH: 14,        // visited by character
   WALL: 15,        // obstacle — impassable
+  LAVA: 16,        // lava — impassable, burns
 };
 
 // Block pool (what the player can place)
@@ -74,6 +75,7 @@ const BLOCK_ICONS = {
 
 // ─── Level Definitions ────────────────────────────────
 const levels = [
+  // ═══════ LEVEL 1-5: Basic ═══════
   // Level 1 - Tutorial (6x6, straight line right)
   // Path: (2,0)S → (2,1)→(2,2)→(2,3)→(2,4)→(2,5)E
   {
@@ -88,6 +90,7 @@ const levels = [
       { r: 2, c: 4, t: T.STRAIGHT_H },
     ],
     reward: 10,
+    obstacles: [{ r: 0, c: 0 }], // 1 tembok — perkenalan
   },
   // Level 2 - Right, down, right (6x6)
   // Path: (0,0)S → (0,1)┐ → (1,1)│ → (2,1)│ → (3,1)│ → (4,1)│ → (5,1)└ → (5,2)— → (5,3)— → (5,4)— → (5,5)E
@@ -108,6 +111,7 @@ const levels = [
       { r: 5, c: 4, t: T.STRAIGHT_H },
     ],
     reward: 15,
+    obstacles: [{ r: 0, c: 3 }, { r: 3, c: 0 }], // 2 tembok
   },
   // Level 3 - Right, down, right (6x6)
   // Path: (2,0)S → (2,1)— → (2,2)┐ → (3,2)│ → (4,2)└ → (4,3)— → (4,4)— → (4,5)E
@@ -125,7 +129,7 @@ const levels = [
       { r: 4, c: 4, t: T.STRAIGHT_H },
     ],
     reward: 20,
-    obstacles: [{ r: 1, c: 3 }, { r: 5, c: 0 }],
+    obstacles: [{ r: 1, c: 3 }, { r: 5, c: 0 }, { r: 0, c: 5 }, { r: 3, c: 5 }], // +2 tembok
   },
   // Level 4 - S-curve with obstacles (7x7)
   // Path: (3,0)S → (3,1)— → (3,2)┐ → (4,2)│ → (5,2)└ → (5,3)— → (5,4)┘ → (4,4)│ → (3,4)┌ → (3,5)— → (3,6)E
@@ -149,11 +153,10 @@ const levels = [
       { r: 3, c: 5, t: T.STRAIGHT_H },
     ],
     reward: 25,
-    obstacles: [{ r: 1, c: 3 }, { r: 4, c: 0 }],
+    obstacles: [{ r: 1, c: 3 }, { r: 4, c: 0 }, { r: 1, c: 5 }, { r: 6, c: 3 }], // +2 tembok
   },
   // Level 5 - Vertical with zigzag (7x7)
   // Path: (0,3)S → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)│ → (6,3)E
-  // (all vertical, same as before)
   {
     gridW: 7, gridH: 7,
     start: { r: 0, c: 3 },
@@ -169,8 +172,10 @@ const levels = [
       { r: 5, c: 3, t: T.STRAIGHT_V },
     ],
     reward: 30,
-    obstacles: [{ r: 2, c: 1 }, { r: 4, c: 5 }],
+    obstacles: [{ r: 2, c: 1 }, { r: 4, c: 5 }, { r: 0, c: 5 }, { r: 6, c: 1 }], // +2 tembok
   },
+
+  // ═══════ LEVEL 6-10: Intermediate ═══════
   // Level 6 - Right, down, right (7x7)
   // Path: (0,0)S → (0,1)— → (0,2)┐ → (1,2)│ → (2,2)│ → (3,2)│ → (4,2)│ → (5,2)│ → (6,2)└ → (6,3)— → (6,4)— → (6,5)— → (6,6)E
   {
@@ -196,7 +201,10 @@ const levels = [
       { r: 6, c: 5, t: T.STRAIGHT_H },
     ],
     reward: 35,
-    obstacles: [{ r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 }],
+    obstacles: [
+      { r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 },
+      { r: 2, c: 5 },
+    ],
   },
   // Level 7 - Long path, zigzag corners (8x8)
   // Path: (0,0)S → (0,1)— → (0,2)— → (0,3)┐ → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)│ → (6,3)│ → (7,3)└ → (7,4)— → (7,5)— → (7,6)— → (7,7)E
@@ -225,7 +233,10 @@ const levels = [
       { r: 7, c: 6, t: T.STRAIGHT_H },
     ],
     reward: 40,
-    obstacles: [{ r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 }, { r: 2, c: 6 }],
+    obstacles: [
+      { r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 },
+      { r: 2, c: 6 }, { r: 5, c: 1 },
+    ],
   },
   // Level 8 - Zigzag with correct corners (8x8)
   // Path: (0,3)S → (1,3)│ → (2,3)└ → (2,4)┐ → (3,4)│ → (4,4)┘ → (4,3)┌ → (5,3)│ → (6,3)│ → (7,3)E
@@ -249,7 +260,10 @@ const levels = [
       { r: 6, c: 3, t: T.STRAIGHT_V },
     ],
     reward: 45,
-    obstacles: [{ r: 1, c: 1 }, { r: 3, c: 5 }, { r: 5, c: 1 }],
+    obstacles: [
+      { r: 1, c: 1 }, { r: 3, c: 5 }, { r: 5, c: 1 },
+      { r: 6, c: 5 }, { r: 0, c: 5, type: 'lava' },
+    ],
   },
   // Level 9 - Long snake with extra turns (8x8)
   // Path: (0,0)S → (0,1)— → (0,2)— → (0,3)┐ → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)│ → (6,3)│ → (7,3)└ → (7,4)— → (7,5)— → (7,6)— → (7,7)E
@@ -279,7 +293,11 @@ const levels = [
       { r: 7, c: 6, t: T.STRAIGHT_H },
     ],
     reward: 50,
-    obstacles: [{ r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 }, { r: 2, c: 6 }],
+    obstacles: [
+      { r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 },
+      { r: 2, c: 6 }, { r: 6, c: 1 }, { r: 0, c: 5 },
+      { r: 4, c: 4, type: 'lava' },
+    ],
   },
   // Level 10 - Complex multi-turn path (8x8)
   // Path: (4,0)S → (4,1)— → (4,2)— → (4,3)┘ → (3,3)│ → (2,3)│ → (1,3)└ → (1,4)— → (1,5)— → (1,6)— → (1,7)E
@@ -304,7 +322,187 @@ const levels = [
       { r: 1, c: 6, t: T.STRAIGHT_H },
     ],
     reward: 55,
-    obstacles: [{ r: 4, c: 4 }, { r: 2, c: 0 }, { r: 6, c: 1 }],
+    obstacles: [
+      { r: 4, c: 4 }, { r: 2, c: 0 }, { r: 6, c: 1 },
+      { r: 0, c: 1 }, { r: 3, c: 5, type: 'lava' },
+    ],
+  },
+
+  // ═══════ LEVEL 11-15: Advanced ═══════
+  // Level 11 - Snake with wall cluster (8x8)
+  // Path: (0,0)S → (0,1)— → (0,2)┐ → (1,2)│ → (2,2)│ → (3,2)│ → (4,2)└ → (4,3)— → (4,4)— → (4,5)┘ → (3,5)│ → (2,5)└ → (2,6)— → (2,7)E
+  {
+    gridW: 8, gridH: 8,
+    start: { r: 0, c: 0 },
+    end: { r: 2, c: 7 },
+    givenBlocks: [
+      T.STRAIGHT_H, T.STRAIGHT_H, T.CORNER_TR,
+      T.STRAIGHT_V, T.STRAIGHT_V, T.STRAIGHT_V,
+      T.CORNER_BL, T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H,
+      T.CORNER_BR, T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H,
+    ],
+    solution: [
+      { r: 0, c: 1, t: T.STRAIGHT_H },
+      { r: 0, c: 2, t: T.CORNER_TR },
+      { r: 1, c: 2, t: T.STRAIGHT_V },
+      { r: 2, c: 2, t: T.STRAIGHT_V },
+      { r: 3, c: 2, t: T.STRAIGHT_V },
+      { r: 4, c: 2, t: T.CORNER_BL },
+      { r: 4, c: 3, t: T.STRAIGHT_H },
+      { r: 4, c: 4, t: T.STRAIGHT_H },
+      { r: 4, c: 5, t: T.CORNER_BR },
+      { r: 3, c: 5, t: T.STRAIGHT_V },
+      { r: 2, c: 5, t: T.CORNER_BL },
+      { r: 2, c: 6, t: T.STRAIGHT_H },
+    ],
+    reward: 70,
+    obstacles: [
+      { r: 1, c: 0 }, { r: 3, c: 1 }, { r: 5, c: 2 },
+      { r: 0, c: 5 }, { r: 1, c: 6 },
+      { r: 7, c: 0, type: 'lava' },
+    ],
+  },
+  // Level 12 - The T-junction gauntlet (8x8)
+  // Path: (0,3)S → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)└ → (5,4)— → (5,5)└ → (4,5)│ → (3,5)┌ → (3,6)— → (3,7)E
+  {
+    gridW: 8, gridH: 8,
+    start: { r: 0, c: 3 },
+    end: { r: 3, c: 7 },
+    givenBlocks: [
+      T.STRAIGHT_V, T.STRAIGHT_V, T.STRAIGHT_V, T.STRAIGHT_V,
+      T.CORNER_BL, T.STRAIGHT_H, T.CORNER_BL,
+      T.STRAIGHT_V, T.CORNER_TL, T.STRAIGHT_H,
+    ],
+    solution: [
+      { r: 1, c: 3, t: T.STRAIGHT_V },
+      { r: 2, c: 3, t: T.STRAIGHT_V },
+      { r: 3, c: 3, t: T.STRAIGHT_V },
+      { r: 4, c: 3, t: T.STRAIGHT_V },
+      { r: 5, c: 3, t: T.CORNER_BL },
+      { r: 5, c: 4, t: T.STRAIGHT_H },
+      { r: 5, c: 5, t: T.CORNER_BL },
+      { r: 4, c: 5, t: T.STRAIGHT_V },
+      { r: 3, c: 5, t: T.CORNER_TL },
+      { r: 3, c: 6, t: T.STRAIGHT_H },
+    ],
+    reward: 80,
+    obstacles: [
+      { r: 0, c: 1 }, { r: 2, c: 5 }, { r: 4, c: 7 },
+      { r: 6, c: 2 }, { r: 7, c: 5 }, { r: 1, c: 7 },
+      { r: 3, c: 1, type: 'lava' },
+    ],
+  },
+  // Level 13 - Spiderweb (9x9, first 9-grid level)
+  // Path: (4,0)S → (4,1)— → (4,2)— → (4,3)┐ → (5,3)│ → (6,3)│ → (7,3)└ → (7,4)— → (7,5)┐ → (8,5)│ → same as ...
+  // Actually simpler: (1,0)S → down → right → up → right → down → right → (8,8)E
+  {
+    gridW: 9, gridH: 9,
+    start: { r: 4, c: 0 },
+    end: { r: 4, c: 8 },
+    givenBlocks: [
+      T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H,
+      T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H,
+    ],
+    solution: [
+      { r: 4, c: 1, t: T.STRAIGHT_H },
+      { r: 4, c: 2, t: T.STRAIGHT_H },
+      { r: 4, c: 3, t: T.STRAIGHT_H },
+      { r: 4, c: 4, t: T.STRAIGHT_H },
+      { r: 4, c: 5, t: T.STRAIGHT_H },
+      { r: 4, c: 6, t: T.STRAIGHT_H },
+      { r: 4, c: 7, t: T.STRAIGHT_H },
+    ],
+    reward: 90,
+    obstacles: [
+      { r: 2, c: 2 }, { r: 2, c: 4 }, { r: 2, c: 6 },
+      { r: 6, c: 2 }, { r: 6, c: 4 }, { r: 6, c: 6 },
+      { r: 0, c: 3 },
+      { r: 4, c: 1, type: 'lava' },
+    ],
+  },
+  // Level 14 - The labyrinth (9x9)
+  // Path: (0,0)S → down zigzag to (9,9)E
+  // S→(1,0)│→(2,0)┐→(2,1)—→(2,2)┐→(3,2)│→(4,2)└→(4,3)—→(4,4)┘→(3,4)│→(2,4)└→(2,5)—→(2,6)┐→(3,6)│→(4,6)│→(5,6)└→(5,7)—→(5,8)E
+  {
+    gridW: 9, gridH: 9,
+    start: { r: 0, c: 0 },
+    end: { r: 5, c: 8 },
+    givenBlocks: [
+      T.STRAIGHT_V,
+      T.CORNER_TR, T.STRAIGHT_H, T.CORNER_TR,
+      T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H,
+      T.CORNER_BR, T.STRAIGHT_V, T.CORNER_BL,
+      T.STRAIGHT_H, T.STRAIGHT_H, T.CORNER_TR,
+      T.STRAIGHT_V, T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H,
+    ],
+    solution: [
+      { r: 1, c: 0, t: T.STRAIGHT_V },
+      { r: 2, c: 0, t: T.CORNER_TR },
+      { r: 2, c: 1, t: T.STRAIGHT_H },
+      { r: 2, c: 2, t: T.CORNER_TR },
+      { r: 3, c: 2, t: T.STRAIGHT_V },
+      { r: 4, c: 2, t: T.CORNER_BL },
+      { r: 4, c: 3, t: T.STRAIGHT_H },
+      { r: 4, c: 4, t: T.CORNER_BR },
+      { r: 3, c: 4, t: T.STRAIGHT_V },
+      { r: 2, c: 4, t: T.CORNER_BL },
+      { r: 2, c: 5, t: T.STRAIGHT_H },
+      { r: 2, c: 6, t: T.CORNER_TR },
+      { r: 3, c: 6, t: T.STRAIGHT_V },
+      { r: 4, c: 6, t: T.STRAIGHT_V },
+      { r: 5, c: 6, t: T.CORNER_BL },
+      { r: 5, c: 7, t: T.STRAIGHT_H },
+    ],
+    reward: 100,
+    obstacles: [
+      { r: 1, c: 2 }, { r: 1, c: 4 }, { r: 1, c: 6 },
+      { r: 3, c: 0 }, { r: 3, c: 8 },
+      { r: 5, c: 2 }, { r: 5, c: 4 },
+      { r: 7, c: 3 }, { r: 7, c: 5 },
+      { r: 0, c: 1, type: 'lava' }, { r: 8, c: 8, type: 'lava' },
+    ],
+  },
+  // Level 15 - The wall gauntlet (10x10, boss level)
+  // Path: (4,0)S → (4,1)— → (4,2)— → (4,3)┐ → (5,3)│ → (6,3)└ → (6,4)— → (6,5)┘ → (5,5)│ → (4,5)│ → (3,5)└ → (3,6)— → (3,7)┐ → (4,7)│ → (5,7)│ → (6,7)│ → (7,7)└ → (7,8)— → (7,9)E
+  {
+    gridW: 10, gridH: 10,
+    start: { r: 4, c: 0 },
+    end: { r: 7, c: 9 },
+    givenBlocks: [
+      T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H, T.CORNER_TR,
+      T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H, T.CORNER_BR,
+      T.STRAIGHT_V, T.STRAIGHT_V, T.CORNER_BL,
+      T.STRAIGHT_H, T.CORNER_TR,
+      T.STRAIGHT_V, T.STRAIGHT_V, T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H,
+    ],
+    solution: [
+      { r: 4, c: 1, t: T.STRAIGHT_H },
+      { r: 4, c: 2, t: T.STRAIGHT_H },
+      { r: 4, c: 3, t: T.CORNER_TR },
+      { r: 5, c: 3, t: T.STRAIGHT_V },
+      { r: 6, c: 3, t: T.CORNER_BL },
+      { r: 6, c: 4, t: T.STRAIGHT_H },
+      { r: 6, c: 5, t: T.CORNER_BR },
+      { r: 5, c: 5, t: T.STRAIGHT_V },
+      { r: 4, c: 5, t: T.STRAIGHT_V },
+      { r: 3, c: 5, t: T.CORNER_BL },
+      { r: 3, c: 6, t: T.STRAIGHT_H },
+      { r: 3, c: 7, t: T.CORNER_TR },
+      { r: 4, c: 7, t: T.STRAIGHT_V },
+      { r: 5, c: 7, t: T.STRAIGHT_V },
+      { r: 6, c: 7, t: T.STRAIGHT_V },
+      { r: 7, c: 7, t: T.CORNER_BL },
+      { r: 7, c: 8, t: T.STRAIGHT_H },
+    ],
+    reward: 150,
+    obstacles: [
+      { r: 2, c: 2 }, { r: 2, c: 4 }, { r: 2, c: 6 }, { r: 2, c: 8 },
+      { r: 4, c: 4 }, { r: 4, c: 6 },
+      { r: 6, c: 1 }, { r: 6, c: 9 },
+      { r: 8, c: 3 }, { r: 8, c: 5 }, { r: 8, c: 7 },
+      { r: 0, c: 5 },
+      { r: 5, c: 0, type: 'lava' }, { r: 9, c: 4, type: 'lava' },
+    ],
   },
 ];
 
@@ -353,7 +551,7 @@ function initLevel(levelIndex) {
   // Place obstacles
   if (level.obstacles) {
     for (const obs of level.obstacles) {
-      grid[obs.r][obs.c] = T.WALL;
+      grid[obs.r][obs.c] = obs.type === 'lava' ? T.LAVA : T.WALL;
     }
   }
 
@@ -460,6 +658,41 @@ function renderGrid() {
           ctx.strokeStyle = '#ff3333';
           ctx.lineWidth = 1;
           ctx.globalAlpha = 0.3;
+          ctx.strokeRect(x + 1, y + 1, CELL - 2, CELL - 2);
+          ctx.globalAlpha = 1.0;
+          break;
+        case T.LAVA:
+          // Lava pulsa glow — core berdenyut
+          ctx.fillStyle = '#4a0f0a';
+          ctx.fillRect(x + 1, y + 1, CELL - 2, CELL - 2);
+          // Top crust
+          ctx.fillStyle = '#8a2a0a';
+          ctx.fillRect(x + 3, y + 3, CELL - 6, CELL - 6);
+          // Crack lines
+          ctx.strokeStyle = '#e85d1a';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x + 8, y + 8); ctx.lineTo(x + CELL - 8, y + CELL - 8);
+          ctx.moveTo(x + CELL - 8, y + 8); ctx.lineTo(x + 8, y + CELL - 8);
+          ctx.stroke();
+          // Glow core — berdenyut
+          const pulse = 0.3 + 0.3 * Math.sin(lavaTime + (r + c) * 2);
+          ctx.fillStyle = '#ff6b1a';
+          ctx.globalAlpha = pulse;
+          ctx.beginPath();
+          ctx.arc(x + CELL/2, y + CELL/2, 12, 0, Math.PI * 2);
+          ctx.fill();
+          // Inner hot core
+          ctx.fillStyle = '#ffaa00';
+          ctx.globalAlpha = pulse * 0.5;
+          ctx.beginPath();
+          ctx.arc(x + CELL/2, y + CELL/2, 6, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1.0;
+          // Outer glow
+          ctx.strokeStyle = '#ff4400';
+          ctx.lineWidth = 1;
+          ctx.globalAlpha = 0.3 + 0.3 * Math.sin(lavaTime + (r + c) * 2);
           ctx.strokeRect(x + 1, y + 1, CELL - 2, CELL - 2);
           ctx.globalAlpha = 1.0;
           break;
@@ -646,10 +879,15 @@ canvas.addEventListener('click', (e) => {
   // Check bounds
   if (col < 0 || col >= gridW || row < 0 || row >= gridH) return;
 
-  // Check if cell is a wall (must come before empty check since WALL is not EMPTY)
+  // Check if cell is a wall or lava (must come before empty check since WALL/LAVA are not EMPTY)
   if (grid[row][col] === T.WALL) {
     Sound.error();
-    notify('Area terhalang rintangan!');
+    notify('Area terhalang tembok!');
+    return;
+  }
+  if (grid[row][col] === T.LAVA) {
+    Sound.error();
+    notify('Area terkena lava panas!');
     return;
   }
 
@@ -960,6 +1198,25 @@ function updatePlayerCosmetic(costumeId) {
   }
 }
 
+// ─── Lava Animation ──────────────────────────────────
+let lavaTime = 0;
+function animateLava() {
+  lavaTime += 0.05;
+  // Only re-render if lava exists on current grid and game screen is active
+  if (document.getElementById('game-screen').classList.contains('active')) {
+    let hasLava = false;
+    for (let r = 0; r < gridH && !hasLava; r++) {
+      for (let c = 0; c < gridW && !hasLava; c++) {
+        if (grid[r][c] === T.LAVA) hasLava = true;
+      }
+    }
+    if (hasLava && !isAnimating && !playerPos) {
+      renderGrid();
+    }
+  }
+  requestAnimationFrame(animateLava);
+}
+
 // ─── Toggle Sound ────────────────────────────────────
 function toggleSound() {
   const muted = Sound.toggleMute();
@@ -972,4 +1229,5 @@ function toggleSound() {
 document.addEventListener('DOMContentLoaded', () => {
   Sound.init();
   initLevel(0);
+  animateLava();
 });
