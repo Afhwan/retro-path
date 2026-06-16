@@ -1,5 +1,90 @@
 // ===== RETRO PATH - Shop System =====
 
+// ─── Player Identity ─────────────────────────────
+const PLAYER_KEY = 'retro_path_player_name';
+const LEADERBOARD_KEY = 'retro_path_leaderboard';
+
+function getPlayerName() {
+  return localStorage.getItem(PLAYER_KEY) || '';
+}
+
+function savePlayerNameToStorage(name) {
+  const trimmed = name.trim().substring(0, 15);
+  if (trimmed.length < 1) return false;
+  localStorage.setItem(PLAYER_KEY, trimmed);
+  return true;
+}
+
+function getShopKey() {
+  const name = getPlayerName();
+  return 'retro_path_shop_' + (name || 'default');
+}
+
+// ─── Leaderboard ────────────────────────────────
+function getLeaderboard() {
+  try {
+    const data = localStorage.getItem(LEADERBOARD_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch { return []; }
+}
+
+function saveLeaderboard(data) {
+  localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(data));
+}
+
+function updateLeaderboard() {
+  const name = getPlayerName();
+  if (!name) return;
+  const data = loadShopData();
+  let lb = getLeaderboard();
+  
+  // Cari entry existing
+  const existing = lb.findIndex(e => e.name === name);
+  const entry = { name, coins: data.coins, gems: data.gems, level: window.currentLevel !== undefined ? window.currentLevel + 1 : 1 };
+  
+  if (existing >= 0) {
+    lb[existing] = entry;
+  } else {
+    lb.push(entry);
+  }
+  
+  // Sort by coins descending
+  lb.sort((a, b) => b.coins - a.coins);
+  // Keep top 20
+  if (lb.length > 20) lb = lb.slice(0, 20);
+  
+  saveLeaderboard(lb);
+}
+
+function renderLeaderboard() {
+  const lb = getLeaderboard();
+  const container = document.getElementById('leaderboard-list');
+  if (!container) return;
+  
+  if (lb.length === 0) {
+    container.innerHTML = '<p style="font-size:7px;color:var(--pixel-gray);text-align:center;padding:20px;">Belum ada data</p>';
+    return;
+  }
+  
+  container.innerHTML = lb.map((entry, i) => `
+    <div class="leaderboard-entry">
+      <span class="rank">#${i + 1}</span>
+      <span class="lb-name">${entry.name}</span>
+      <span class="lb-coins">🪙${entry.coins}</span>
+      <span class="lb-level">Lv.${entry.level}</span>
+    </div>
+  `).join('');
+}
+
+function showLeaderboard() {
+  renderLeaderboard();
+  document.getElementById('leaderboard-modal').classList.remove('hidden');
+}
+
+function closeLeaderboard() {
+  document.getElementById('leaderboard-modal').classList.add('hidden');
+}
+
 const SHOP_STORAGE_KEY = 'retro_path_shop';
 
 // Product catalog
@@ -41,10 +126,10 @@ function getDefaultData() {
   };
 }
 
-// Load shop data from Local Storage
+// Load shop data from Local Storage (per player)
 function loadShopData() {
   try {
-    const data = localStorage.getItem(SHOP_STORAGE_KEY);
+    const data = localStorage.getItem(getShopKey());
     if (data) {
       const parsed = JSON.parse(data);
       // Merge with defaults to ensure all fields exist
@@ -57,10 +142,10 @@ function loadShopData() {
   return getDefaultData();
 }
 
-// Save shop data to Local Storage
+// Save shop data to Local Storage (per player)
 function saveShopData(data) {
   try {
-    localStorage.setItem(SHOP_STORAGE_KEY, JSON.stringify(data));
+    localStorage.setItem(getShopKey(), JSON.stringify(data));
   } catch (e) {
     console.warn('Failed to save shop data:', e);
   }

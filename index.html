@@ -18,10 +18,12 @@
         <span class="title-line accent">PATH</span>
       </h1>
       <p class="subtitle">~ Puzzle Strategy ~</p>
+      <p class="player-name-display" id="menuPlayerName"></p>
     </div>
     <div class="menu-buttons">
       <button class="retro-btn primary" onclick="Sound.uiClick(); showScreen('game-screen'); initLevel(currentLevel);">MAIN</button>
       <button class="retro-btn" onclick="Sound.uiClick(); showScreen('shop-screen'); renderShop();">TOKO</button>
+      <button class="retro-btn" onclick="Sound.uiClick(); showLeaderboard()">🏆 PAPAN PERINGKAT</button>
     </div>
     <div class="menu-footer">
       <p>TEKAN <span class="key-hint">SPASI</span> UNTUK MAIN</p>
@@ -32,6 +34,7 @@
   <div id="game-screen" class="screen">
     <div class="game-hud">
       <div class="hud-left">
+        <span class="player-hud-name" id="hudPlayerName"></span>
         <span class="lives-display" id="livesDisplay">❤️❤️❤️</span>
         <span class="coin-display">🪙 <span id="coin-count">0</span></span>
         <span class="gem-display">💎 <span id="gem-count">0</span></span>
@@ -108,6 +111,27 @@
       <p style="margin: 10px 0; font-size: 7px; color: var(--pixel-light);">Tenang, levelnya bisa dicoba lagi!</p>
       <button class="retro-btn primary fail-btn" onclick="retryLevel()">🔄 COBA LAGI</button>
       <button class="retro-btn" onclick="showScreen('main-menu')" style="margin-top:8px;">← KEMBALI KE MENU</button>
+    </div>
+  </div>
+
+  <!-- Nama Pemain Modal -->
+  <div id="name-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2 class="modal-title">NAMA PEMAIN</h2>
+      <p style="font-size:7px;color:var(--pixel-light);margin-bottom:15px;">Masukkan namamu untuk menyimpan data!</p>
+      <input type="text" id="nameInput" class="retro-input" placeholder="Ketik namamu..." maxlength="15" autocomplete="off">
+      <button class="retro-btn primary" onclick="setPlayerName()" style="margin-top:12px;">✓ MULAI</button>
+    </div>
+  </div>
+
+  <!-- Leaderboard Modal -->
+  <div id="leaderboard-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h2 class="modal-title">🏆 PAPAN PERINGKAT</h2>
+      <div id="leaderboard-list" class="leaderboard-list">
+        <p style="font-size:7px;color:var(--pixel-gray);text-align:center;">Memuat...</p>
+      </div>
+      <button class="retro-btn back-btn" onclick="closeLeaderboard()" style="margin-top:12px;">← TUTUP</button>
     </div>
   </div>
 

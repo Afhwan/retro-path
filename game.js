@@ -1288,8 +1288,72 @@ function retryLevel() {
 }
 
 // ─── Initialize Game ────────────────────────────────
+function updatePlayerNameDisplay() {
+  const name = getPlayerName();
+  const hudEl = document.getElementById('hudPlayerName');
+  const menuEl = document.getElementById('menuPlayerName');
+  if (hudEl) hudEl.textContent = name ? name + ' |' : '';
+  if (menuEl) menuEl.textContent = name ? '👤 ' + name : '';
+}
+
+function setPlayerName() {
+  const input = document.getElementById('nameInput');
+  if (!input) return;
+  const name = input.value.trim().substring(0, 15);
+  if (name.length < 1) {
+    notify('Nama minimal 1 karakter!');
+    return;
+  }
+  savePlayerNameToStorage(name);
+  document.getElementById('name-modal').classList.add('hidden');
+  updatePlayerNameDisplay();
+  initLevel(0);
+}
+
+// Enter key on name input
+document.addEventListener('keydown', function nameKeyHandler(e) {
+  if (e.key === 'Enter') {
+    const modal = document.getElementById('name-modal');
+    if (modal && !modal.classList.contains('hidden')) {
+      setPlayerName();
+    }
+  }
+});
+
+// Override showScreen to check player name
+const _origShowScreen = showScreen;
+showScreen = function(id) {
+  if (id === 'game-screen' || id === 'shop-screen') {
+    const name = getPlayerName();
+    if (!name) {
+      document.getElementById('name-modal').classList.remove('hidden');
+      document.getElementById('nameInput').focus();
+      return;
+    }
+  }
+  _origShowScreen(id);
+};
+
+// Hook leaderboard update into level complete
+const _origOnLevelComplete = onLevelComplete;
+onLevelComplete = function() {
+  _origOnLevelComplete();
+  updateLeaderboard();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   Sound.init();
+  updatePlayerNameDisplay();
   initLevel(0);
   animateLava();
+  
+  // Cek nama pemain
+  const name = getPlayerName();
+  if (!name) {
+    document.getElementById('name-modal').classList.remove('hidden');
+    setTimeout(() => {
+      const input = document.getElementById('nameInput');
+      if (input) input.focus();
+    }, 300);
+  }
 });
