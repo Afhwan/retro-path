@@ -2,11 +2,11 @@
   "version": 2,
   "routes": [
     { "src": "^/$", "dest": "/landing.html" },
+    { "src": "^/game$", "dest": "/index.html" },
     { "src": "^/styles\\.css$", "dest": "/styles.css" },
     { "src": "^/sound\\.js$", "dest": "/sound.js" },
     { "src": "^/shop\\.js$", "dest": "/shop.js" },
     { "src": "^/game\\.js$", "dest": "/game.js" },
-    { "src": "^/landing\\.html$", "dest": "/landing.html" },
-    { "src": "^/game$", "dest": "/index.html" }
+    { "src": "^/landing\\.html$", "dest": "/landing.html" }
   ]
 }
