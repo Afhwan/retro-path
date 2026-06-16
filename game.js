@@ -417,7 +417,6 @@ const levels = [
       { r: 2, c: 2 }, { r: 2, c: 4 }, { r: 2, c: 6 },
       { r: 6, c: 2 }, { r: 6, c: 4 }, { r: 6, c: 6 },
       { r: 0, c: 3 },
-      { r: 4, c: 1, type: 'lava' },
     ],
   },
   // Level 14 - The labyrinth (9x9)
