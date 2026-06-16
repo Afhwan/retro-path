@@ -1349,10 +1349,13 @@ document.addEventListener('keydown', function nameKeyHandler(e) {
   }
 });
 
+// Allow download screen without name check
+let bypassNameCheck = false;
+
 // Override showScreen to check player name
 const _origShowScreen = showScreen;
 showScreen = function(id) {
-  if (id === 'game-screen' || id === 'shop-screen') {
+  if ((id === 'game-screen' || id === 'shop-screen') && !bypassNameCheck) {
     const name = getPlayerName();
     if (!name) {
       document.getElementById('name-modal').classList.remove('hidden');
@@ -1393,6 +1396,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Auto-buka download screen kalau ada parameter ?download=1
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('download') === '1') {
+    bypassNameCheck = true;
     setTimeout(() => {
       showScreen('download-screen');
     }, 500);
