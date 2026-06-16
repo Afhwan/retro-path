@@ -32,6 +32,7 @@
   <div id="game-screen" class="screen">
     <div class="game-hud">
       <div class="hud-left">
+        <span class="lives-display" id="livesDisplay">❤️❤️❤️</span>
         <span class="coin-display">🪙 <span id="coin-count">0</span></span>
         <span class="gem-display">💎 <span id="gem-count">0</span></span>
       </div>
@@ -97,6 +98,17 @@
       <p>Kamu mendapatkan</p>
       <p class="reward-display">🪙 +<span id="reward-coins">0</span></p>
       <button class="retro-btn primary" onclick="Sound.uiClick(); nextLevel()">LEVEL BERIKUTNYA →</button>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div id="game-over" class="modal-overlay hidden">
+    <div class="modal-content fail">
+      <h2 class="modal-title fail-title">PERCOBAAN GAGAL!</h2>
+      <p class="fail-subtitle">Kamu kehabisan nyawa 😵</p>
+      <p style="margin: 10px 0; font-size: 7px; color: var(--pixel-light);">Tenang, levelnya bisa dicoba lagi!</p>
+      <button class="retro-btn primary fail-btn" onclick="retryLevel()">🔄 COBA LAGI</button>
+      <button class="retro-btn" onclick="showScreen('main-menu')" style="margin-top:8px;">← KEMBALI KE MENU</button>
     </div>
   </div>
 

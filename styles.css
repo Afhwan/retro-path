@@ -534,6 +534,51 @@ body {
   background: var(--pixel-gray);
 }
 
+/* ===== HEARTS / LIVES ===== */
+.lives-display {
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+/* ===== GAME OVER MODAL ===== */
+.modal-content.fail {
+  border-color: var(--pixel-red);
+  text-align: center;
+}
+
+.fail-title {
+  color: var(--pixel-red);
+  font-size: 16px;
+  text-shadow: 3px 3px 0 #4a0000;
+  margin-bottom: 10px;
+}
+
+.fail-subtitle {
+  font-size: 9px;
+  color: var(--pixel-light);
+  margin-bottom: 12px;
+}
+
+.fail-btn {
+  font-size: 10px;
+  padding: 12px 20px;
+  animation: pulse-retry 1s infinite alternate;
+}
+
+@keyframes pulse-retry {
+  0% { box-shadow: 2px 2px 0 rgba(255,107,53,0.3); }
+  100% { box-shadow: 4px 4px 0 rgba(255,107,53,0.7); }
+}
+
+/* ===== SHAKE ANIMATION ===== */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 700px) {
   :root {

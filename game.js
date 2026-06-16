@@ -516,6 +516,7 @@ let isAnimating = false;
 let playerPos = null;
 let hintActive = false;
 let placedCells = []; // Track cells the player has placed blocks on
+let lives = 3;
 
 // ─── Initialize Level ────────────────────────────────
 function initLevel(levelIndex) {
@@ -563,6 +564,8 @@ function initLevel(levelIndex) {
   playerPos = null;
   hintActive = false;
   placedCells = [];
+  lives = 3;
+  updateLivesDisplay();
 
   // Update UI
   document.getElementById('level-number').textContent = levelIndex + 1;
@@ -972,16 +975,14 @@ function startPath() {
   // Check that we have a path from start to end
   const path = findPath();
   if (!path || path.length === 0) {
-    Sound.error();
-    notify('Buat jalur dari START ke END terlebih dahulu!');
+    notify('Tempatkan blok jalan dulu!');
     return;
   }
 
   // Check that end position is reachable
   const last = path[path.length - 1];
   if (last.r !== level.end.r || last.c !== level.end.c) {
-    Sound.error();
-    notify('Jalur belum mencapai tujuan!');
+    loseLife();
     return;
   }
 
@@ -1222,6 +1223,44 @@ function toggleSound() {
   const btn = document.getElementById('muteBtn');
   btn.textContent = muted ? '🔇' : '🔊';
   btn.title = muted ? 'Suara mati' : 'Suara hidup';
+}
+
+// ─── Lives System ───────────────────────────────────
+function updateLivesDisplay() {
+  const el = document.getElementById('livesDisplay');
+  if (!el) return;
+  el.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+}
+
+function loseLife() {
+  if (isAnimating) return;
+  lives--;
+  updateLivesDisplay();
+  Sound.fail();
+
+  if (lives <= 0) {
+    // Game Over
+    setTimeout(() => {
+      document.getElementById('game-over').classList.remove('hidden');
+    }, 300);
+  } else {
+    // Still have lives — shake + reset
+    const canvas = document.getElementById('gameCanvas');
+    canvas.style.animation = 'shake 0.3s';
+    setTimeout(() => {
+      canvas.style.animation = '';
+      resetBoard();
+      notify(`Sisa ${lives} nyawa!`);
+    }, 350);
+  }
+}
+
+function retryLevel() {
+  document.getElementById('game-over').classList.add('hidden');
+  lives = 3;
+  updateLivesDisplay();
+  resetBoard();
+  initLevel(currentLevel);
 }
 
 // ─── Initialize Game ────────────────────────────────

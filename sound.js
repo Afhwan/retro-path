@@ -127,6 +127,18 @@ const Sound = (() => {
     }, 200);
   }
 
+  /** Gagal / kehabisan nyawa — descending sad tone */
+  function fail() {
+    playSequence([
+      [400, 0.2, _volume * 0.6],
+      [300, 0.2, _volume * 0.5],
+      [200, 0.3, _volume * 0.4],
+    ], 'sawtooth');
+    setTimeout(() => {
+      playNoise(0.2, _volume * 0.15);
+    }, 400);
+  }
+
   /** Error / notifikasi gagal */
   function error() {
     playTone(200, 0.15, 'sawtooth', _volume * 0.5);
@@ -197,6 +209,7 @@ const Sound = (() => {
     step,
     startPath,
     levelComplete,
+    fail,
     error,
     hint,
     purchase,
