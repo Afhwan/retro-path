@@ -95,7 +95,7 @@ npm run dist:win
 | Platform | Format | Link |
 |----------|--------|------|
 | Linux | AppImage | [Download](https://github.com/Afhwan/retro-path/releases/download/v1.0.0/Retro-Path-1.0.0.AppImage) |
-| Windows | Installer (.exe) | _(belum tersedia — build di Windows)_ |
+| Windows | Installer (.exe) | [Download](https://github.com/Afhwan/retro-path/releases/download/v1.0.0/Retro.Path.Setup.1.0.0.exe) |
 
 ---
 
