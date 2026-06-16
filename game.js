@@ -567,6 +567,11 @@ function initLevel(levelIndex) {
   lives = 3;
   updateLivesDisplay();
 
+  // Auto-select first block
+  if (inventory.length > 0) {
+    selectedSlot = 0;
+  }
+
   // Update UI
   document.getElementById('level-number').textContent = levelIndex + 1;
   document.getElementById('startBtn').disabled = false;
@@ -859,16 +864,21 @@ function selectBlock(index) {
   if (isAnimating) return;
   selectedSlot = index;
   renderInventory();
-  canvas.style.cursor = inventory[index] ? 'crosshair' : 'default';
+  canvas.style.cursor = (inventory[index] || inventory[0]) ? 'crosshair' : 'default';
 }
 
 // ─── Canvas Click Handler ──────────────────────────
 canvas.addEventListener('click', (e) => {
   if (isAnimating) return;
+  
+  // Auto-select first block if nothing selected and inventory not empty
   if (selectedSlot < 0 || selectedSlot >= inventory.length) {
-    Sound.error();
-    notify('Pilih blok jalan terlebih dahulu!');
-    return;
+    if (inventory.length > 0) {
+      selectedSlot = 0;
+      renderInventory();
+    } else {
+      return;
+    }
   }
 
   const rect = canvas.getBoundingClientRect();
@@ -900,7 +910,7 @@ canvas.addEventListener('click', (e) => {
     return;
   }
 
-  // Place the block
+  // Place the block — always use first available slot (auto-advance)
   const blockType = inventory[selectedSlot];
   grid[row][col] = blockType;
   placedCells.push({ r: row, c: col });
@@ -912,7 +922,13 @@ canvas.addEventListener('click', (e) => {
 
   renderGrid();
   renderInventory();
-  canvas.style.cursor = 'default';
+  canvas.style.cursor = inventory.length > 0 ? 'crosshair' : 'default';
+  
+  // Auto-select next block
+  if (inventory.length > 0) {
+    selectedSlot = 0;
+    renderInventory();
+  }
 });
 
 // ─── Canvas Right-click to remove ──────────────────
@@ -1112,8 +1128,14 @@ function resetBoard() {
 
   renderGrid();
   renderInventory();
-  canvas.style.cursor = 'default';
+  canvas.style.cursor = inventory.length > 0 ? 'crosshair' : 'default';
   document.getElementById('startBtn').textContent = '▶ MULAI';
+
+  // Auto-select first block after reset
+  if (inventory.length > 0) {
+    selectedSlot = 0;
+    renderInventory();
+  }
 }
 
 // ─── Use Hint ──────────────────────────────────────
