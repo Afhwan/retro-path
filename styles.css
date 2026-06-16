@@ -679,6 +679,62 @@ body {
 .leaderboard-entry:nth-child(3) .rank { color: #cd7f32; }
 .leaderboard-entry:first-child .lb-name { color: var(--pixel-gold); }
 
+/* ===== ICONS (no emoji) ===== */
+.icon-coin { color: var(--pixel-gold); }
+.icon-coin::before { content: "$"; font-weight: bold; }
+
+.icon-gem { color: var(--pixel-purple); }
+.icon-gem::before { content: "<>"; font-size: 7px; letter-spacing: -2px; }
+
+.icon-heart { color: #e74c3c; }
+.icon-heart::before { content: "♥"; }
+
+.icon-heart-lost { color: #3a3a5a; }
+.icon-heart-lost::before { content: "♥"; }
+
+.icon-mute { color: var(--pixel-gray); }
+.icon-mute::before { content: "♪"; }
+
+.icon-unmute { color: var(--pixel-light); }
+.icon-unmute::before { content: "♪"; }
+
+.icon-sound-off::before { content: "✕"; font-size: 10px; }
+
+.icon-trophy { color: var(--pixel-gold); }
+.icon-trophy::before { content: "★"; }
+
+.icon-hint { color: var(--pixel-gold); }
+.icon-hint::before { content: "?"; font-weight: bold; }
+
+.icon-play { color: var(--pixel-accent); }
+.icon-play::before { content: ">"; font-weight: bold; }
+
+.icon-reset { color: var(--pixel-light); }
+.icon-reset::before { content: "↻"; }
+
+.icon-close { color: var(--pixel-light); }
+.icon-close::before { content: "X"; font-weight: bold; }
+
+.icon-back { color: var(--pixel-light); }
+.icon-back::before { content: "<"; font-weight: bold; }
+
+.icon-next { color: var(--pixel-accent); }
+.icon-next::before { content: ">"; font-weight: bold; }
+
+.icon-retry { color: var(--pixel-accent); }
+.icon-retry::before { content: "↻"; font-weight: bold; }
+
+.icon-player { color: var(--pixel-secondary); }
+.icon-player::before { content: "@"; font-weight: bold; }
+
+.icon-level { color: var(--pixel-secondary); }
+
+.icon-success { color: #2ecc71; }
+.icon-success::before { content: "✓"; font-weight: bold; }
+
+.icon-fail { color: #e74c3c; }
+.icon-fail::before { content: "✗"; font-weight: bold; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 700px) {
   :root {

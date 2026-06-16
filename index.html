@@ -20,15 +20,15 @@
       <p class="subtitle">~ Puzzle Strategy ~</p>
       <p class="player-name-display" id="menuPlayerName"></p>
       <div class="menu-stats" id="menuStats">
-        <span>🪙 <span id="menuCoins">0</span></span>
-        <span>💎 <span id="menuGems">0</span></span>
-        <span>🏆 Lv.<span id="menuLevel">1</span></span>
+        <span><span class="icon-coin"></span> <span id="menuCoins">0</span></span>
+        <span><span class="icon-gem"></span> <span id="menuGems">0</span></span>
+        <span><span class="icon-level"></span> Lv.<span id="menuLevel">1</span></span>
       </div>
     </div>
     <div class="menu-buttons">
       <button class="retro-btn primary" onclick="Sound.uiClick(); showScreen('game-screen'); initLevel(currentLevel);">MAIN</button>
       <button class="retro-btn" onclick="Sound.uiClick(); showScreen('shop-screen'); renderShop();">TOKO</button>
-      <button class="retro-btn" onclick="Sound.uiClick(); showLeaderboard()">🏆 PAPAN PERINGKAT</button>
+      <button class="retro-btn" onclick="Sound.uiClick(); showLeaderboard()"><span class="icon-trophy"></span> PAPAN PERINGKAT</button>
     </div>
     <div class="menu-footer">
       <p>TEKAN <span class="key-hint">SPASI</span> UNTUK MAIN</p>
@@ -40,16 +40,16 @@
     <div class="game-hud">
       <div class="hud-left">
         <span class="player-hud-name" id="hudPlayerName"></span>
-        <span class="lives-display" id="livesDisplay">❤️❤️❤️</span>
-        <span class="coin-display">🪙 <span id="coin-count">0</span></span>
-        <span class="gem-display">💎 <span id="gem-count">0</span></span>
+        <span class="lives-display" id="livesDisplay"><span class="icon-heart"></span><span class="icon-heart"></span><span class="icon-heart"></span></span>
+        <span class="coin-display"><span class="icon-coin"></span> <span id="coin-count">0</span></span>
+        <span class="gem-display"><span class="icon-gem"></span> <span id="gem-count">0</span></span>
       </div>
       <div class="hud-center">
-        <span class="level-display">LEVEL <span id="level-number">1</span></span>
+        <span class="level-display"><span class="icon-level"></span> LEVEL <span id="level-number">1</span></span>
       </div>
       <div class="hud-right">
-        <button class="hud-btn" id="muteBtn" onclick="toggleSound()" title="Suara">🔊</button>
-        <button class="hud-btn" onclick="showScreen('main-menu'); Sound.screenTransition();" title="Menu">✕</button>
+        <button class="hud-btn" id="muteBtn" onclick="toggleSound()" title="Suara"><span class="icon-unmute"></span></button>
+        <button class="hud-btn" onclick="showScreen('main-menu'); Sound.screenTransition();" title="Menu"><span class="icon-close"></span></button>
       </div>
     </div>
 
@@ -63,9 +63,9 @@
     </div>
 
     <div class="game-controls">
-      <button class="retro-btn primary" id="startBtn" onclick="startPath()">▶ MULAI</button>
-      <button class="retro-btn" onclick="Sound.uiClick(); resetBoard()">↺ RESET</button>
-      <button class="retro-btn hint-btn" id="hintBtn" onclick="Sound.hint(); useHint()">💡 PETUNJUK</button>
+      <button class="retro-btn primary" id="startBtn" onclick="startPath()"><span class="icon-play"></span> MULAI</button>
+      <button class="retro-btn" onclick="Sound.uiClick(); resetBoard()"><span class="icon-reset"></span> RESET</button>
+      <button class="retro-btn hint-btn" id="hintBtn" onclick="Sound.hint(); useHint()"><span class="icon-hint"></span> PETUNJUK</button>
     </div>
   </div>
 
@@ -74,8 +74,8 @@
     <div class="shop-hud">
       <h2 class="shop-title">TOKO</h2>
       <div class="shop-balance">
-        <span>🪙 <span id="shop-coins">0</span></span>
-        <span>💎 <span id="shop-gems">0</span></span>
+        <span><span class="icon-coin"></span> <span id="shop-coins">0</span></span>
+        <span><span class="icon-gem"></span> <span id="shop-gems">0</span></span>
       </div>
     </div>
 
@@ -92,7 +92,7 @@
       <div id="transaction-history" class="transaction-list"></div>
     </div>
 
-    <button class="retro-btn back-btn" onclick="showScreen('main-menu')">← KEMBALI</button>
+    <button class="retro-btn back-btn" onclick="showScreen('main-menu')"><span class="icon-back"></span> KEMBALI</button>
   </div>
 
   <!-- Notification Overlay -->
@@ -103,8 +103,8 @@
     <div class="modal-content">
       <h2 class="modal-title">LEVEL SELESAI!</h2>
       <p>Kamu mendapatkan</p>
-      <p class="reward-display">🪙 +<span id="reward-coins">0</span></p>
-      <button class="retro-btn primary" onclick="Sound.uiClick(); nextLevel()">LEVEL BERIKUTNYA →</button>
+      <p class="reward-display"><span class="icon-coin"></span> +<span id="reward-coins">0</span></p>
+      <button class="retro-btn primary" onclick="Sound.uiClick(); nextLevel()">LEVEL BERIKUTNYA <span class="icon-next"></span></button>
     </div>
   </div>
 
@@ -112,10 +112,10 @@
   <div id="game-over" class="modal-overlay hidden">
     <div class="modal-content fail">
       <h2 class="modal-title fail-title">PERCOBAAN GAGAL!</h2>
-      <p class="fail-subtitle">Kamu kehabisan nyawa 😵</p>
+      <p class="fail-subtitle">Kamu kehabisan nyawa</p>
       <p style="margin: 10px 0; font-size: 7px; color: var(--pixel-light);">Tenang, levelnya bisa dicoba lagi!</p>
-      <button class="retro-btn primary fail-btn" onclick="retryLevel()">🔄 COBA LAGI</button>
-      <button class="retro-btn" onclick="showScreen('main-menu')" style="margin-top:8px;">← KEMBALI KE MENU</button>
+      <button class="retro-btn primary fail-btn" onclick="retryLevel()"><span class="icon-retry"></span> COBA LAGI</button>
+      <button class="retro-btn" onclick="showScreen('main-menu')" style="margin-top:8px;"><span class="icon-back"></span> KEMBALI KE MENU</button>
     </div>
   </div>
 
@@ -132,11 +132,11 @@
   <!-- Leaderboard Modal -->
   <div id="leaderboard-modal" class="modal-overlay hidden">
     <div class="modal-content">
-      <h2 class="modal-title">🏆 PAPAN PERINGKAT</h2>
+      <h2 class="modal-title">PAPAN PERINGKAT</h2>
       <div id="leaderboard-list" class="leaderboard-list">
         <p style="font-size:7px;color:var(--pixel-gray);text-align:center;">Memuat...</p>
       </div>
-      <button class="retro-btn back-btn" onclick="closeLeaderboard()" style="margin-top:12px;">← TUTUP</button>
+      <button class="retro-btn back-btn" onclick="closeLeaderboard()" style="margin-top:12px;"><span class="icon-close"></span> TUTUP</button>
     </div>
   </div>
 

@@ -528,7 +528,7 @@ let lives = 3;
 function initLevel(levelIndex) {
   const level = levels[levelIndex];
   if (!level) {
-    notify('Semua level selesai! Kamu juara! 🎉');
+    notify('Semua level selesai! Kamu juara!');
     showScreen('main-menu');
     return;
   }
@@ -1245,7 +1245,7 @@ function animateLava() {
 function toggleSound() {
   const muted = Sound.toggleMute();
   const btn = document.getElementById('muteBtn');
-  btn.textContent = muted ? '🔇' : '🔊';
+  btn.innerHTML = muted ? '<span class="icon-mute"></span>' : '<span class="icon-unmute"></span>';
   btn.title = muted ? 'Suara mati' : 'Suara hidup';
 }
 
@@ -1253,7 +1253,18 @@ function toggleSound() {
 function updateLivesDisplay() {
   const el = document.getElementById('livesDisplay');
   if (!el) return;
-  el.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+  el.innerHTML = '';
+
+  for (let i = 0; i < lives; i++) {
+    const h = document.createElement('span');
+    h.className = 'icon-heart';
+    el.appendChild(h);
+  }
+  for (let i = lives; i < 3; i++) {
+    const h = document.createElement('span');
+    h.className = 'icon-heart-lost';
+    el.appendChild(h);
+  }
 }
 
 function loseLife() {
@@ -1293,7 +1304,7 @@ function updatePlayerNameDisplay() {
   const hudEl = document.getElementById('hudPlayerName');
   const menuEl = document.getElementById('menuPlayerName');
   if (hudEl) hudEl.textContent = name ? name + ' |' : '';
-  if (menuEl) menuEl.textContent = name ? '👤 ' + name : '';
+  if (menuEl) menuEl.innerHTML = name ? '<span class="icon-player"></span> ' + name : '';
   
   // Update menu stats
   if (name) {

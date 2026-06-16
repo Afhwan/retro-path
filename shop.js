@@ -81,8 +81,8 @@ function renderLeaderboard() {
     <div class="leaderboard-entry">
       <span class="rank">#${i + 1}</span>
       <span class="lb-name">${entry.name}</span>
-      <span class="lb-coins">🪙${entry.coins}</span>
-      <span class="lb-level">Lv.${entry.level}</span>
+      <span class="lb-coins"><span class="icon-coin"></span>${entry.coins}</span>
+      <span class="lb-level"><span class="icon-level"></span>Lv.${entry.level}</span>
     </div>
   `).join('');
 }
@@ -101,25 +101,25 @@ const SHOP_STORAGE_KEY = 'retro_path_shop';
 // Product catalog
 const shopProducts = {
   currency: [
-    { id: 'coin_small',  name: 'Kecil Koin',     desc: 'Dapatkan 100 koin',           icon: '🪙', price: 1000, currency: 'real',  value: 100,  type: 'coins' },
-    { id: 'coin_medium', name: 'Sedang Koin',     desc: 'Dapatkan 500 koin',           icon: '🪙', price: 4000, currency: 'real',  value: 500,  type: 'coins' },
-    { id: 'coin_large',  name: 'Besar Koin',      desc: 'Dapatkan 2000 koin',          icon: '🪙', price: 15000, currency: 'real', value: 2000, type: 'coins' },
-    { id: 'gem_small',   name: 'Kecil Permata',   desc: 'Dapatkan 10 permata',         icon: '💎', price: 2000, currency: 'real',  value: 10,   type: 'gems' },
-    { id: 'gem_medium',  name: 'Sedang Permata',  desc: 'Dapatkan 50 permata',         icon: '💎', price: 9000, currency: 'real',  value: 50,   type: 'gems' },
+    { id: 'coin_small',  name: 'Kecil Koin',     desc: 'Dapatkan 100 koin',           icon: '<span class="icon-coin"></span>', price: 1000, currency: 'real',  value: 100,  type: 'coins' },
+    { id: 'coin_medium', name: 'Sedang Koin',     desc: 'Dapatkan 500 koin',           icon: '<span class="icon-coin"></span>', price: 4000, currency: 'real',  value: 500,  type: 'coins' },
+    { id: 'coin_large',  name: 'Besar Koin',      desc: 'Dapatkan 2000 koin',          icon: '<span class="icon-coin"></span>', price: 15000, currency: 'real', value: 2000, type: 'coins' },
+    { id: 'gem_small',   name: 'Kecil Permata',   desc: 'Dapatkan 10 permata',         icon: '<span class="icon-gem"></span>', price: 2000, currency: 'real',  value: 10,   type: 'gems' },
+    { id: 'gem_medium',  name: 'Sedang Permata',  desc: 'Dapatkan 50 permata',         icon: '<span class="icon-gem"></span>', price: 9000, currency: 'real',  value: 50,   type: 'gems' },
   ],
   hints: [
-    { id: 'hint_1',      name: '1 Petunjuk',      desc: 'Lihat 1 langkah benar',        icon: '💡', price: 200,  currency: 'coins', value: 1 },
-    { id: 'hint_5',      name: '5 Petunjuk',      desc: 'Lihat 5 langkah benar',        icon: '💡', price: 800,  currency: 'coins', value: 5 },
-    { id: 'hint_15',     name: '15 Petunjuk',     desc: 'Lihat 15 langkah benar',       icon: '💡', price: 2000, currency: 'coins', value: 15 },
-    { id: 'hint_unlimited', name: 'Petunjuk Unlimited', desc: 'Petunjuk tak terbatas',   icon: '✨', price: 50,   currency: 'gems',  value: -1 },
+    { id: 'hint_1',      name: '1 Petunjuk',      desc: 'Lihat 1 langkah benar',        icon: '<span class="icon-hint"></span>', price: 200,  currency: 'coins', value: 1 },
+    { id: 'hint_5',      name: '5 Petunjuk',      desc: 'Lihat 5 langkah benar',        icon: '<span class="icon-hint"></span>', price: 800,  currency: 'coins', value: 5 },
+    { id: 'hint_15',     name: '15 Petunjuk',     desc: 'Lihat 15 langkah benar',       icon: '<span class="icon-hint"></span>', price: 2000, currency: 'coins', value: 15 },
+    { id: 'hint_unlimited', name: 'Petunjuk Unlimited', desc: 'Petunjuk tak terbatas',   icon: '<span class="icon-trophy"></span>', price: 50,   currency: 'gems',  value: -1 },
   ],
   costumes: [
-    { id: 'costume_default', name: 'Pixel Petualang', desc: 'Tampilan klasik',          icon: '🧑', price: 0,    currency: 'coins', value: 'default', owned: true },
-    { id: 'costume_ninja',   name: 'Pixel Ninja',     desc: 'Penuh misteri',            icon: '🥷', price: 500,  currency: 'coins', value: 'ninja' },
-    { id: 'costume_robot',   name: 'Pixel Robot',     desc: 'Dari masa depan',          icon: '🤖', price: 1000, currency: 'coins', value: 'robot' },
-    { id: 'costume_wizard',  name: 'Pixel Penyihir',  desc: 'Kekuatan magis',           icon: '🧙', price: 1500, currency: 'coins', value: 'wizard' },
-    { id: 'costume_dragon',  name: 'Pixel Naga',      desc: 'Kekuatan naga kuno',       icon: '🐉', price: 300,  currency: 'gems',  value: 'dragon' },
-    { id: 'costume_ghost',   name: 'Pixel Hantu',     desc: 'Menghilang dalam gelap',   icon: '👻', price: 400,  currency: 'gems',  value: 'ghost' },
+    { id: 'costume_default', name: 'Pixel Petualang', desc: 'Tampilan klasik',          icon: '@', price: 0,    currency: 'coins', value: 'default', owned: true },
+    { id: 'costume_ninja',   name: 'Pixel Ninja',     desc: 'Penuh misteri',            icon: '@', price: 500,  currency: 'coins', value: 'ninja' },
+    { id: 'costume_robot',   name: 'Pixel Robot',     desc: 'Dari masa depan',          icon: '@', price: 1000, currency: 'coins', value: 'robot' },
+    { id: 'costume_wizard',  name: 'Pixel Penyihir',  desc: 'Kekuatan magis',           icon: '@', price: 1500, currency: 'coins', value: 'wizard' },
+    { id: 'costume_dragon',  name: 'Pixel Naga',      desc: 'Kekuatan naga kuno',       icon: '@', price: 300,  currency: 'gems',  value: 'dragon' },
+    { id: 'costume_ghost',   name: 'Pixel Hantu',     desc: 'Menghilang dalam gelap',   icon: '@', price: 400,  currency: 'gems',  value: 'ghost' },
   ]
 };
 
@@ -311,7 +311,7 @@ function getPriceText(item) {
   if (item.currency === 'real') {
     return `Rp${item.price.toLocaleString()}`;
   }
-  const icon = item.currency === 'coins' ? '🪙' : '💎';
+  const icon = item.currency === 'coins' ? '<span class="icon-coin"></span>' : '<span class="icon-gem"></span>';
   return `${item.price} ${icon}`;
 }
 
@@ -406,8 +406,9 @@ function renderTransactionHistory() {
   container.innerHTML = data.transactions.map(t => {
     const date = new Date(t.date);
     const dateStr = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-    const statusEmoji = t.status === 'berhasil' ? '✅' : '❌';
-    return `<div class="transaction-item">${statusEmoji} ${t.itemName} — ${t.currency === 'real' ? `Rp${t.price.toLocaleString()}` : `${t.price} ${t.currency === 'coins' ? '🪙' : '💎'}`} (${t.status}) <span style="float:right;color:var(--pixel-gray)">${dateStr}</span></div>`;
+    const statusIcon = t.status === 'berhasil' ? '<span class="icon-success"></span>' : '<span class="icon-fail"></span>';
+    const currencyIcon = t.currency === 'coins' ? '<span class="icon-coin"></span>' : t.currency === 'gems' ? '<span class="icon-gem"></span>' : 'Rp';
+    return `<div class="transaction-item">${statusIcon} ${t.itemName} &mdash; ${t.currency === 'real' ? 'Rp'+t.price.toLocaleString() : t.price+' '+currencyIcon} (${t.status}) <span style="float:right;color:var(--pixel-gray)">${dateStr}</span></div>`;
   }).join('');
 }
 
