@@ -609,6 +609,10 @@ body {
   color: var(--pixel-light);
 }
 
+.menu-stats .icon-coin { color: var(--pixel-gold); }
+.menu-stats .icon-gem { color: var(--pixel-purple); }
+.menu-stats .icon-level { color: var(--pixel-secondary); }
+
 /* ===== NAME INPUT ===== */
 .retro-input {
   font-family: 'Press Start 2P', monospace;
@@ -680,60 +684,132 @@ body {
 .leaderboard-entry:first-child .lb-name { color: var(--pixel-gold); }
 
 /* ===== ICONS (no emoji) ===== */
-.icon-coin { color: var(--pixel-gold); }
-.icon-coin::before { content: "$"; font-weight: bold; }
+.icon-coin {
+  color: var(--pixel-gold);
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-coin::before { content: "$"; }
 
-.icon-gem { color: var(--pixel-purple); }
-.icon-gem::before { content: "<>"; font-size: 7px; letter-spacing: -2px; }
+.icon-gem {
+  color: var(--pixel-purple);
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-gem::before { content: "\25C6"; } /* ◆ */
 
-.icon-heart { color: #e74c3c; }
-.icon-heart::before { content: "♥"; }
+.icon-heart {
+  color: #e74c3c;
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-heart::before { content: "\2665"; } /* ♥ */
 
-.icon-heart-lost { color: #3a3a5a; }
-.icon-heart-lost::before { content: "♥"; }
+.icon-heart-lost {
+  color: #3a3a5a;
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-heart-lost::before { content: "\2665"; } /* ♥ */
 
-.icon-mute { color: var(--pixel-gray); }
-.icon-mute::before { content: "♪"; }
+.icon-mute {
+  color: var(--pixel-gray);
+  font-size: 16px;
+  font-weight: bold;
+}
+.icon-mute::before { content: "\266B"; } /* ♫ */
 
-.icon-unmute { color: var(--pixel-light); }
-.icon-unmute::before { content: "♪"; }
+.icon-unmute {
+  color: var(--pixel-light);
+  font-size: 16px;
+  font-weight: bold;
+}
+.icon-unmute::before { content: "\266B"; } /* ♫ */
 
-.icon-sound-off::before { content: "✕"; font-size: 10px; }
+.icon-trophy {
+  color: var(--pixel-gold);
+  font-size: 14px;
+}
+.icon-trophy::before { content: "\2605"; } /* ★ */
 
-.icon-trophy { color: var(--pixel-gold); }
-.icon-trophy::before { content: "★"; }
+.icon-hint {
+  color: var(--pixel-gold);
+  font-size: 14px;
+  font-weight: bold;
+}
+.icon-hint::before { content: "?"; }
 
-.icon-hint { color: var(--pixel-gold); }
-.icon-hint::before { content: "?"; font-weight: bold; }
+.icon-play {
+  color: var(--pixel-accent);
+  font-size: 14px;
+  font-weight: bold;
+}
+.icon-play::before { content: "\25B6"; } /* ▶ */
 
-.icon-play { color: var(--pixel-accent); }
-.icon-play::before { content: ">"; font-weight: bold; }
+.icon-reset {
+  color: var(--pixel-light);
+  font-size: 16px;
+}
+.icon-reset::before { content: "\21BB"; } /* ↻ */
 
-.icon-reset { color: var(--pixel-light); }
-.icon-reset::before { content: "↻"; }
+.icon-close {
+  color: var(--pixel-light);
+  font-size: 14px;
+  font-weight: bold;
+}
+.icon-close::before { content: "X"; }
 
-.icon-close { color: var(--pixel-light); }
-.icon-close::before { content: "X"; font-weight: bold; }
+.icon-back {
+  color: var(--pixel-light);
+  font-size: 14px;
+  font-weight: bold;
+}
+.icon-back::before { content: "\25C0"; } /* ◀ */
 
-.icon-back { color: var(--pixel-light); }
-.icon-back::before { content: "<"; font-weight: bold; }
+.icon-next {
+  color: var(--pixel-accent);
+  font-size: 14px;
+  font-weight: bold;
+}
+.icon-next::before { content: "\25B6"; } /* ▶ */
 
-.icon-next { color: var(--pixel-accent); }
-.icon-next::before { content: ">"; font-weight: bold; }
+.icon-retry {
+  color: var(--pixel-accent);
+  font-size: 14px;
+  font-weight: bold;
+}
+.icon-retry::before { content: "\21BB"; } /* ↻ */
 
-.icon-retry { color: var(--pixel-accent); }
-.icon-retry::before { content: "↻"; font-weight: bold; }
+.icon-player {
+  color: var(--pixel-secondary);
+  font-size: 14px;
+  font-weight: bold;
+}
+.icon-player::before { content: "@"; }
 
-.icon-player { color: var(--pixel-secondary); }
-.icon-player::before { content: "@"; font-weight: bold; }
+.icon-level {
+  color: var(--pixel-secondary);
+  font-size: 12px;
+}
+.icon-level::before { content: "\2302"; } /* ⌂ */
 
-.icon-level { color: var(--pixel-secondary); }
+.icon-success {
+  color: #2ecc71;
+  font-size: 12px;
+  font-weight: bold;
+}
+.icon-success::before { content: "\2713"; } /* ✓ */
 
-.icon-success { color: #2ecc71; }
-.icon-success::before { content: "✓"; font-weight: bold; }
-
-.icon-fail { color: #e74c3c; }
-.icon-fail::before { content: "✗"; font-weight: bold; }
+.icon-fail {
+  color: #e74c3c;
+  font-size: 12px;
+  font-weight: bold;
+}
+.icon-fail::before { content: "\2717"; } /* ✗ */
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 700px) {

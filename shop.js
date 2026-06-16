@@ -82,7 +82,7 @@ function renderLeaderboard() {
       <span class="rank">#${i + 1}</span>
       <span class="lb-name">${entry.name}</span>
       <span class="lb-coins"><span class="icon-coin"></span>${entry.coins}</span>
-      <span class="lb-level"><span class="icon-level"></span>Lv.${entry.level}</span>
+      <span class="lb-level">Lv.${entry.level}</span>
     </div>
   `).join('');
 }
