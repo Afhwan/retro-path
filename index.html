@@ -28,7 +28,8 @@
     <div class="menu-buttons">
       <button class="retro-btn primary" onclick="Sound.uiClick(); showScreen('game-screen'); initLevel(currentLevel);">MAIN</button>
       <button class="retro-btn" onclick="Sound.uiClick(); showScreen('shop-screen'); renderShop();">TOKO</button>
-      <button class="retro-btn" onclick="Sound.uiClick(); showLeaderboard()"><span class="icon-trophy"></span> PAPAN PERINGKAT</button>
+      <button class="retro-btn" onclick="Sound.uiClick(); showScreen('download-screen')">UNDUH</button>
+      <button class="retro-btn" onclick="Sound.uiClick(); showLeaderboard()">PERINGKAT</button>
     </div>
     <div class="menu-footer">
       <p>TEKAN <span class="key-hint">SPASI</span> UNTUK MAIN</p>
@@ -93,6 +94,31 @@
     </div>
 
     <button class="retro-btn back-btn" onclick="showScreen('main-menu')"><span class="icon-back"></span> KEMBALI</button>
+  </div>
+
+  <!-- Download Screen -->
+  <div id="download-screen" class="screen">
+    <div class="shop-hud">
+      <h2 class="shop-title">UNDUH GAME</h2>
+    </div>
+    <div class="shop-items" style="max-width:450px;">
+      <div class="shop-item">
+        <div class="shop-item-icon" style="font-size:24px;color:var(--pixel-accent);">LINUX</div>
+        <div class="shop-item-name">Retro Path - Linux</div>
+        <div class="shop-item-desc">AppImage — Download & jalankan langsung</div>
+        <a href="https://github.com/Afhwan/retro-path/releases/latest/download/Retro-Path-1.0.0.AppImage" target="_blank" class="retro-btn primary" style="display:block;text-align:center;text-decoration:none;font-size:9px;margin-top:10px;">UNDUH APPIMAGE</a>
+      </div>
+      <div class="shop-item">
+        <div class="shop-item-icon" style="font-size:24px;color:var(--pixel-blue);">WINDOWS</div>
+        <div class="shop-item-name">Retro Path - Windows</div>
+        <div class="shop-item-desc">Installer .exe — Setup untuk Windows</div>
+        <a href="https://github.com/Afhwan/retro-path/releases/latest/download/Retro-Path-Setup-1.0.0.exe" target="_blank" class="retro-btn primary" style="display:block;text-align:center;text-decoration:none;font-size:9px;margin-top:10px;">UNDUH .EXE</a>
+      </div>
+    </div>
+    <p style="font-size:6px;color:var(--pixel-gray);text-align:center;max-width:450px;margin-top:10px;line-height:1.5;">
+      Butuh bantuan? <span class="icon-coin"></span> Cek halaman <a href="https://github.com/Afhwan/retro-path" target="_blank" style="color:var(--pixel-secondary);">GitHub</a> untuk info lebih lanjut.
+    </p>
+    <button class="retro-btn back-btn" onclick="showScreen('main-menu')" style="margin-top:15px;"><span class="icon-back"></span> KEMBALI</button>
   </div>
 
   <!-- Notification Overlay -->
