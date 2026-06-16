@@ -1383,9 +1383,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initLevel(0);
   animateLava();
   
-  // Cek nama pemain
+  // Cek parameter ?download=1 (dulu, sebelum name modal)
+  const urlParams = new URLSearchParams(window.location.search);
+  const isDownload = urlParams.get('download') === '1';
+  
+  // Cek nama pemain (skip kalau download)
   const name = getPlayerName();
-  if (!name) {
+  if (!name && !isDownload) {
     document.getElementById('name-modal').classList.remove('hidden');
     setTimeout(() => {
       const input = document.getElementById('nameInput');
@@ -1393,12 +1397,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 300);
   }
   
-  // Auto-buka download screen kalau ada parameter ?download=1
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('download') === '1') {
+  // Auto-buka download screen
+  if (isDownload) {
     bypassNameCheck = true;
     setTimeout(() => {
       showScreen('download-screen');
-    }, 500);
+    }, 100);
   }
 });
