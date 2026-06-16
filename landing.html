@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Path - Puzzle Strategy Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0f0f1a;
+      color: #e8e8f0;
+      font-family: 'Press Start 2P', monospace;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      image-rendering: pixelated;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      max-width: 500px;
+      padding: 20px;
+    }
+    .title-line {
+      display: block;
+      font-size: 36px;
+      letter-spacing: 12px;
+      text-shadow: 4px 4px 0 #2d2d44;
+    }
+    .title-line.accent {
+      color: #ff6b35;
+      font-size: 48px;
+      text-shadow: 4px 4px 0 #c0392b;
+    }
+    .subtitle {
+      font-size: 10px;
+      color: #c4c4d4;
+      margin: 16px 0 40px;
+      letter-spacing: 6px;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 340px;
+      margin: 0 auto;
+    }
+    .btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 14px;
+      padding: 20px 24px;
+      border: 4px solid #2d2d44;
+      background: #1a1a2e;
+      color: #e8e8f0;
+      cursor: pointer;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.05s linear;
+      letter-spacing: 4px;
+    }
+    .btn:hover {
+      transform: translate(-3px, -3px);
+    }
+    .btn:active {
+      transform: translate(2px, 2px);
+    }
+    .btn-primary {
+      border-color: #ff6b35;
+      color: #ff6b35;
+      box-shadow: 6px 6px 0 rgba(255,107,53,0.4);
+    }
+    .btn-primary:hover {
+      box-shadow: 8px 8px 0 rgba(255,107,53,0.4);
+    }
+    .btn-primary:active {
+      box-shadow: 2px 2px 0 rgba(255,107,53,0.4);
+    }
+    .btn-download {
+      border-color: #4ecdc4;
+      color: #4ecdc4;
+      box-shadow: 6px 6px 0 rgba(78,205,196,0.4);
+    }
+    .btn-download:hover {
+      box-shadow: 8px 8px 0 rgba(78,205,196,0.4);
+    }
+    .btn-download:active {
+      box-shadow: 2px 2px 0 rgba(78,205,196,0.4);
+    }
+    .btn-small {
+      font-size: 9px;
+      padding: 12px 16px;
+      letter-spacing: 2px;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 7px;
+      color: #2d2d44;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .crt {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.03) 0px,
+        rgba(0,0,0,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      animation: flicker 0.15s infinite alternate;
+    }
+    @keyframes flicker {
+      0% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+    .desc {
+      font-size: 7px;
+      color: #2d2d44;
+      margin-top: 12px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="crt"></div>
+  <div class="container">
+    <h1 class="game-title">
+      <span class="title-line">RETRO</span>
+      <span class="title-line accent">PATH</span>
+    </h1>
+    <p class="subtitle">~ Puzzle Strategy ~</p>
+
+    <div class="buttons">
+      <a href="game" class="btn btn-primary">MAIN ONLINE</a>
+      <a href="game?download=1" class="btn btn-download">UNDUH GAME</a>
+    </div>
+
+    <p class="desc">Susun blok jalan, hubungkan START ke END.<br>15 level dengan tingkat kesulitan progresif.</p>
+
+    <p class="footer">TEKAN ENTER UNTUK MAIN</p>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        window.location.href = 'game';
+      }
+    });
+    // Cek parameter download
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('download') === '1') {
+      window.location.href = 'game?download=1';
+    }
+    // Cek kalau langsung dari game
+    if (window.location.hash === '#game') {
+      window.location.href = 'game';
+    }
+  </script>
+</body>
+</html>

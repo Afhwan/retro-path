@@ -1389,4 +1389,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (input) input.focus();
     }, 300);
   }
+  
+  // Auto-buka download screen kalau ada parameter ?download=1
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('download') === '1') {
+    setTimeout(() => {
+      showScreen('download-screen');
+    }, 500);
+  }
 });
