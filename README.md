@@ -5,6 +5,8 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Platform](https://img.shields.io/badge/platform-web%20%7C%20linux%20%7C%20windows-lightgrey)
+[![Play Online](https://img.shields.io/badge/play-online-brightgreen)](https://retro-path.vercel.app)
+[![GitHub](https://img.shields.io/badge/github-source-blue)](https://github.com/Afhwan/retro-path)
 
 ---
 
@@ -92,8 +94,8 @@ npm run dist:win
 
 | Platform | Format | Link |
 |----------|--------|------|
-| Linux | AppImage | *(coming soon)* |
-| Windows | Installer (.exe) | *(coming soon)* |
+| Linux | AppImage | [Download](https://github.com/Afhwan/retro-path/releases/latest/download/Retro-Path-1.0.0.AppImage) |
+| Windows | Installer (.exe) | [Download](https://github.com/Afhwan/retro-path/releases/latest/download/Retro-Path-Setup-1.0.0.exe) |
 
 ---
 
