@@ -596,6 +596,19 @@ body {
   white-space: nowrap;
 }
 
+/* ===== MENU STATS ===== */
+.menu-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 9px;
+}
+
+.menu-stats span {
+  color: var(--pixel-light);
+}
+
 /* ===== NAME INPUT ===== */
 .retro-input {
   font-family: 'Press Start 2P', monospace;

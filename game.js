@@ -1294,6 +1294,17 @@ function updatePlayerNameDisplay() {
   const menuEl = document.getElementById('menuPlayerName');
   if (hudEl) hudEl.textContent = name ? name + ' |' : '';
   if (menuEl) menuEl.textContent = name ? '👤 ' + name : '';
+  
+  // Update menu stats
+  if (name) {
+    const data = loadShopData();
+    const levelEl = document.getElementById('menuLevel');
+    const coinsEl = document.getElementById('menuCoins');
+    const gemsEl = document.getElementById('menuGems');
+    if (coinsEl) coinsEl.textContent = data.coins;
+    if (gemsEl) gemsEl.textContent = data.gems;
+    if (levelEl) levelEl.textContent = currentLevel + 1;
+  }
 }
 
 function setPlayerName() {
@@ -1339,6 +1350,10 @@ showScreen = function(id) {
     }
   }
   _origShowScreen(id);
+  // Refresh stats when returning to menu
+  if (id === 'main-menu') {
+    updatePlayerNameDisplay();
+  }
 };
 
 // Hook leaderboard update into level complete
