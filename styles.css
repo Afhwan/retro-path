@@ -111,7 +111,31 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 280px;
+  width: 320px;
+}
+
+.menu-sub-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.menu-sub-buttons .retro-btn {
+  font-size: 9px;
+  padding: 10px 16px;
+  flex: 1;
+}
+
+.big-btn {
+  font-size: 14px !important;
+  padding: 18px 24px !important;
+  letter-spacing: 3px;
+}
+
+.download-btn {
+  border-color: var(--pixel-secondary) !important;
+  color: var(--pixel-secondary) !important;
+  box-shadow: 4px 4px 0 rgba(78, 205, 196, 0.4) !important;
 }
 
 .menu-footer {
