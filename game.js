@@ -75,25 +75,39 @@ const BLOCK_ICONS = {
 
 // ─── Level Definitions ────────────────────────────────
 const levels = [
-  // ═══════ LEVEL 1-5: Basic ═══════
-  // Level 1 - Tutorial (6x6, straight line right)
-  // Path: (2,0)S → (2,1)→(2,2)→(2,3)→(2,4)→(2,5)E
+  // ═══════ LEVEL 1-3: Pemula ═══════
+  // Level 1 - Tutorial (5x5, straight line right)
   {
-    gridW: 6, gridH: 6,
+    gridW: 5, gridH: 5,
     start: { r: 2, c: 0 },
-    end: { r: 2, c: 5 },
-    givenBlocks: [T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H],
+    end: { r: 2, c: 4 },
+    givenBlocks: [T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H],
     solution: [
       { r: 2, c: 1, t: T.STRAIGHT_H },
       { r: 2, c: 2, t: T.STRAIGHT_H },
       { r: 2, c: 3, t: T.STRAIGHT_H },
-      { r: 2, c: 4, t: T.STRAIGHT_H },
     ],
     reward: 10,
-    obstacles: [{ r: 0, c: 0 }], // 1 tembok — perkenalan
+    obstacles: [{ r: 0, c: 2 }],
   },
-  // Level 2 - Right, down, right (6x6)
-  // Path: (0,0)S → (0,1)┐ → (1,1)│ → (2,1)│ → (3,1)│ → (4,1)│ → (5,1)└ → (5,2)— → (5,3)— → (5,4)— → (5,5)E
+  // Level 2 - Right & down (5x5)
+  // Path: (0,0)S → (0,1)┐ → (1,1)│ → (2,1)└ → (2,2)— → (2,3)— → (2,4)E
+  {
+    gridW: 5, gridH: 5,
+    start: { r: 0, c: 0 },
+    end: { r: 2, c: 4 },
+    givenBlocks: [T.CORNER_TR, T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H, T.STRAIGHT_H],
+    solution: [
+      { r: 0, c: 1, t: T.CORNER_TR },
+      { r: 1, c: 1, t: T.STRAIGHT_V },
+      { r: 2, c: 1, t: T.CORNER_BL },
+      { r: 2, c: 2, t: T.STRAIGHT_H },
+      { r: 2, c: 3, t: T.STRAIGHT_H },
+    ],
+    reward: 15,
+    obstacles: [{ r: 0, c: 3 }, { r: 3, c: 1 }],
+  },
+  // Level 3 - First zigzag (6x6)
   {
     gridW: 6, gridH: 6,
     start: { r: 0, c: 0 },
@@ -110,29 +124,15 @@ const levels = [
       { r: 5, c: 3, t: T.STRAIGHT_H },
       { r: 5, c: 4, t: T.STRAIGHT_H },
     ],
-    reward: 15,
-    obstacles: [{ r: 0, c: 3 }, { r: 3, c: 0 }], // 2 tembok
-  },
-  // Level 3 - Right, down, right (6x6)
-  // Path: (2,0)S → (2,1)— → (2,2)┐ → (3,2)│ → (4,2)└ → (4,3)— → (4,4)— → (4,5)E
-  {
-    gridW: 6, gridH: 6,
-    start: { r: 2, c: 0 },
-    end: { r: 4, c: 5 },
-    givenBlocks: [T.STRAIGHT_H, T.STRAIGHT_H, T.CORNER_TR, T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H, T.STRAIGHT_H],
-    solution: [
-      { r: 2, c: 1, t: T.STRAIGHT_H },
-      { r: 2, c: 2, t: T.CORNER_TR },
-      { r: 3, c: 2, t: T.STRAIGHT_V },
-      { r: 4, c: 2, t: T.CORNER_BL },
-      { r: 4, c: 3, t: T.STRAIGHT_H },
-      { r: 4, c: 4, t: T.STRAIGHT_H },
-    ],
     reward: 20,
-    obstacles: [{ r: 1, c: 3 }, { r: 5, c: 0 }, { r: 0, c: 5 }, { r: 3, c: 5 }], // +2 tembok
+    obstacles: [
+      { r: 0, c: 3 }, { r: 3, c: 0 },
+      { r: 2, c: 4, type: 'lava' },
+    ],
   },
-  // Level 4 - S-curve with obstacles (7x7)
-  // Path: (3,0)S → (3,1)— → (3,2)┐ → (4,2)│ → (5,2)└ → (5,3)— → (5,4)┘ → (4,4)│ → (3,4)┌ → (3,5)— → (3,6)E
+
+  // ═══════ LEVEL 4-6: Mudah ═══════
+  // Level 4 - S-curve (7x7)
   {
     gridW: 7, gridH: 7,
     start: { r: 3, c: 0 },
@@ -153,10 +153,12 @@ const levels = [
       { r: 3, c: 5, t: T.STRAIGHT_H },
     ],
     reward: 25,
-    obstacles: [{ r: 1, c: 3 }, { r: 4, c: 0 }, { r: 1, c: 5 }, { r: 6, c: 3 }], // +2 tembok
+    obstacles: [
+      { r: 1, c: 3 }, { r: 4, c: 0 }, { r: 1, c: 5 },
+      { r: 6, c: 3 }, { r: 2, c: 1, type: 'lava' },
+    ],
   },
-  // Level 5 - Vertical with zigzag (7x7)
-  // Path: (0,3)S → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)│ → (6,3)E
+  // Level 5 - Vertical gauntlet (7x7)
   {
     gridW: 7, gridH: 7,
     start: { r: 0, c: 3 },
@@ -172,12 +174,13 @@ const levels = [
       { r: 5, c: 3, t: T.STRAIGHT_V },
     ],
     reward: 30,
-    obstacles: [{ r: 2, c: 1 }, { r: 4, c: 5 }, { r: 0, c: 5 }, { r: 6, c: 1 }], // +2 tembok
+    obstacles: [
+      { r: 2, c: 1 }, { r: 4, c: 5 }, { r: 0, c: 5 },
+      { r: 6, c: 1 }, { r: 1, c: 5, type: 'lava' },
+      { r: 5, c: 0, type: 'lava' },
+    ],
   },
-
-  // ═══════ LEVEL 6-10: Intermediate ═══════
-  // Level 6 - Right, down, right (7x7)
-  // Path: (0,0)S → (0,1)— → (0,2)┐ → (1,2)│ → (2,2)│ → (3,2)│ → (4,2)│ → (5,2)│ → (6,2)└ → (6,3)— → (6,4)— → (6,5)— → (6,6)E
+  // Level 6 - Corner path (7x7)
   {
     gridW: 7, gridH: 7,
     start: { r: 0, c: 0 },
@@ -203,11 +206,12 @@ const levels = [
     reward: 35,
     obstacles: [
       { r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 },
-      { r: 2, c: 5 },
+      { r: 2, c: 5 }, { r: 4, c: 4, type: 'lava' },
     ],
   },
-  // Level 7 - Long path, zigzag corners (8x8)
-  // Path: (0,0)S → (0,1)— → (0,2)— → (0,3)┐ → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)│ → (6,3)│ → (7,3)└ → (7,4)— → (7,5)— → (7,6)— → (7,7)E
+
+  // ═══════ LEVEL 7-9: Menengah ═══════
+  // Level 7 - Long snake (8x8)
   {
     gridW: 8, gridH: 8,
     start: { r: 0, c: 0 },
@@ -232,14 +236,14 @@ const levels = [
       { r: 7, c: 5, t: T.STRAIGHT_H },
       { r: 7, c: 6, t: T.STRAIGHT_H },
     ],
-    reward: 40,
+    reward: 45,
     obstacles: [
       { r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 },
       { r: 2, c: 6 }, { r: 5, c: 1 },
+      { r: 4, c: 7, type: 'lava' },
     ],
   },
-  // Level 8 - Zigzag with correct corners (8x8)
-  // Path: (0,3)S → (1,3)│ → (2,3)└ → (2,4)┐ → (3,4)│ → (4,4)┘ → (4,3)┌ → (5,3)│ → (6,3)│ → (7,3)E
+  // Level 8 - Zigzag triple (8x8)
   {
     gridW: 8, gridH: 8,
     start: { r: 0, c: 3 },
@@ -259,16 +263,16 @@ const levels = [
       { r: 5, c: 3, t: T.STRAIGHT_V },
       { r: 6, c: 3, t: T.STRAIGHT_V },
     ],
-    reward: 45,
+    reward: 50,
     obstacles: [
       { r: 1, c: 1 }, { r: 3, c: 5 }, { r: 5, c: 1 },
-      { r: 6, c: 5 }, { r: 0, c: 5, type: 'lava' },
+      { r: 6, c: 5 }, { r: 0, c: 5 },
+      { r: 2, c: 0, type: 'lava' }, { r: 5, c: 7, type: 'lava' },
     ],
   },
-  // Level 9 - Long snake with extra turns (8x8)
-  // Path: (0,0)S → (0,1)— → (0,2)— → (0,3)┐ → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)│ → (6,3)│ → (7,3)└ → (7,4)— → (7,5)— → (7,6)— → (7,7)E
+  // Level 9 - Snake + lava (9x9)
   {
-    gridW: 8, gridH: 8,
+    gridW: 9, gridH: 9,
     start: { r: 0, c: 0 },
     end: { r: 7, c: 7 },
     givenBlocks: [
@@ -292,17 +296,18 @@ const levels = [
       { r: 7, c: 5, t: T.STRAIGHT_H },
       { r: 7, c: 6, t: T.STRAIGHT_H },
     ],
-    reward: 50,
+    reward: 55,
     obstacles: [
       { r: 1, c: 1 }, { r: 3, c: 0 }, { r: 5, c: 5 },
       { r: 2, c: 6 }, { r: 6, c: 1 }, { r: 0, c: 5 },
-      { r: 4, c: 4, type: 'lava' },
+      { r: 4, c: 4 }, { r: 8, c: 3, type: 'lava' },
     ],
   },
-  // Level 10 - Complex multi-turn path (8x8)
-  // Path: (4,0)S → (4,1)— → (4,2)— → (4,3)┘ → (3,3)│ → (2,3)│ → (1,3)└ → (1,4)— → (1,5)— → (1,6)— → (1,7)E
+
+  // ═══════ LEVEL 10-12: Sulit ═══════
+  // Level 10 - Multi-turn (9x9)
   {
-    gridW: 8, gridH: 8,
+    gridW: 9, gridH: 9,
     start: { r: 4, c: 0 },
     end: { r: 1, c: 7 },
     givenBlocks: [
@@ -321,18 +326,16 @@ const levels = [
       { r: 1, c: 5, t: T.STRAIGHT_H },
       { r: 1, c: 6, t: T.STRAIGHT_H },
     ],
-    reward: 55,
+    reward: 65,
     obstacles: [
       { r: 4, c: 4 }, { r: 2, c: 0 }, { r: 6, c: 1 },
-      { r: 0, c: 1 }, { r: 3, c: 5, type: 'lava' },
+      { r: 0, c: 1 }, { r: 3, c: 5 },
+      { r: 5, c: 3, type: 'lava' }, { r: 0, c: 8, type: 'lava' },
     ],
   },
-
-  // ═══════ LEVEL 11-15: Advanced ═══════
-  // Level 11 - Snake with wall cluster (8x8)
-  // Path: (0,0)S → (0,1)— → (0,2)┐ → (1,2)│ → (2,2)│ → (3,2)│ → (4,2)└ → (4,3)— → (4,4)— → (4,5)┘ → (3,5)│ → (2,5)└ → (2,6)— → (2,7)E
+  // Level 11 - Snake cluster (9x9)
   {
-    gridW: 8, gridH: 8,
+    gridW: 9, gridH: 9,
     start: { r: 0, c: 0 },
     end: { r: 2, c: 7 },
     givenBlocks: [
@@ -355,53 +358,53 @@ const levels = [
       { r: 2, c: 5, t: T.CORNER_BL },
       { r: 2, c: 6, t: T.STRAIGHT_H },
     ],
-    reward: 70,
+    reward: 75,
     obstacles: [
       { r: 1, c: 0 }, { r: 3, c: 1 }, { r: 5, c: 2 },
       { r: 0, c: 5 }, { r: 1, c: 6 },
-      { r: 7, c: 0, type: 'lava' },
+      { r: 7, c: 0, type: 'lava' }, { r: 8, c: 5, type: 'lava' },
     ],
   },
-  // Level 12 - The T-junction gauntlet (8x8)
-  // Path: (0,3)S → (1,3)│ → (2,3)│ → (3,3)│ → (4,3)│ → (5,3)└ → (5,4)— → (5,5)└ → (4,5)│ → (3,5)┌ → (3,6)— → (3,7)E
+  // Level 12 - T-gauntlet with lava (10x10)
   {
-    gridW: 8, gridH: 8,
-    start: { r: 0, c: 3 },
-    end: { r: 3, c: 7 },
+    gridW: 10, gridH: 10,
+    start: { r: 0, c: 4 },
+    end: { r: 3, c: 8 },
     givenBlocks: [
       T.STRAIGHT_V, T.STRAIGHT_V, T.STRAIGHT_V, T.STRAIGHT_V,
       T.CORNER_BL, T.STRAIGHT_H, T.CORNER_BL,
       T.STRAIGHT_V, T.CORNER_TL, T.STRAIGHT_H,
     ],
     solution: [
-      { r: 1, c: 3, t: T.STRAIGHT_V },
-      { r: 2, c: 3, t: T.STRAIGHT_V },
-      { r: 3, c: 3, t: T.STRAIGHT_V },
-      { r: 4, c: 3, t: T.STRAIGHT_V },
-      { r: 5, c: 3, t: T.CORNER_BL },
-      { r: 5, c: 4, t: T.STRAIGHT_H },
-      { r: 5, c: 5, t: T.CORNER_BL },
-      { r: 4, c: 5, t: T.STRAIGHT_V },
-      { r: 3, c: 5, t: T.CORNER_TL },
-      { r: 3, c: 6, t: T.STRAIGHT_H },
+      { r: 1, c: 4, t: T.STRAIGHT_V },
+      { r: 2, c: 4, t: T.STRAIGHT_V },
+      { r: 3, c: 4, t: T.STRAIGHT_V },
+      { r: 4, c: 4, t: T.STRAIGHT_V },
+      { r: 5, c: 4, t: T.CORNER_BL },
+      { r: 5, c: 5, t: T.STRAIGHT_H },
+      { r: 5, c: 6, t: T.CORNER_BL },
+      { r: 4, c: 6, t: T.STRAIGHT_V },
+      { r: 3, c: 6, t: T.CORNER_TL },
+      { r: 3, c: 7, t: T.STRAIGHT_H },
     ],
-    reward: 80,
+    reward: 85,
     obstacles: [
-      { r: 0, c: 1 }, { r: 2, c: 5 }, { r: 4, c: 7 },
-      { r: 6, c: 2 }, { r: 7, c: 5 }, { r: 1, c: 7 },
+      { r: 0, c: 1 }, { r: 2, c: 6 }, { r: 4, c: 8 },
+      { r: 6, c: 3 }, { r: 8, c: 5 }, { r: 1, c: 8 },
       { r: 3, c: 1, type: 'lava' },
+      { r: 7, c: 9, type: 'lava' }, { r: 9, c: 2, type: 'lava' },
     ],
   },
-  // Level 13 - Spiderweb (9x9, first 9-grid level)
-  // Path: (4,0)S → (4,1)— → (4,2)— → (4,3)┐ → (5,3)│ → (6,3)│ → (7,3)└ → (7,4)— → (7,5)┐ → (8,5)│ → same as ...
-  // Actually simpler: (1,0)S → down → right → up → right → down → right → (8,8)E
+
+  // ═══════ LEVEL 13-15: Expert ═══════
+  // Level 13 - Spiderweb (10x10)
   {
-    gridW: 9, gridH: 9,
+    gridW: 10, gridH: 10,
     start: { r: 4, c: 0 },
-    end: { r: 4, c: 8 },
+    end: { r: 4, c: 9 },
     givenBlocks: [
       T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H,
-      T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H,
+      T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H,
     ],
     solution: [
       { r: 4, c: 1, t: T.STRAIGHT_H },
@@ -411,21 +414,21 @@ const levels = [
       { r: 4, c: 5, t: T.STRAIGHT_H },
       { r: 4, c: 6, t: T.STRAIGHT_H },
       { r: 4, c: 7, t: T.STRAIGHT_H },
+      { r: 4, c: 8, t: T.STRAIGHT_H },
     ],
-    reward: 90,
+    reward: 100,
     obstacles: [
-      { r: 2, c: 2 }, { r: 2, c: 4 }, { r: 2, c: 6 },
-      { r: 6, c: 2 }, { r: 6, c: 4 }, { r: 6, c: 6 },
+      { r: 2, c: 2 }, { r: 2, c: 4 }, { r: 2, c: 6 }, { r: 2, c: 8 },
+      { r: 6, c: 2 }, { r: 6, c: 4 }, { r: 6, c: 6 }, { r: 6, c: 8 },
       { r: 0, c: 3 },
+      { r: 8, c: 1, type: 'lava' }, { r: 8, c: 9, type: 'lava' },
     ],
   },
-  // Level 14 - The labyrinth (9x9)
-  // Path: (0,0)S → down zigzag to (9,9)E
-  // S→(1,0)│→(2,0)┐→(2,1)—→(2,2)┐→(3,2)│→(4,2)└→(4,3)—→(4,4)┘→(3,4)│→(2,4)└→(2,5)—→(2,6)┐→(3,6)│→(4,6)│→(5,6)└→(5,7)—→(5,8)E
+  // Level 14 - The labyrinth (10x10)
   {
-    gridW: 9, gridH: 9,
+    gridW: 10, gridH: 10,
     start: { r: 0, c: 0 },
-    end: { r: 5, c: 8 },
+    end: { r: 6, c: 9 },
     givenBlocks: [
       T.STRAIGHT_V,
       T.CORNER_TR, T.STRAIGHT_H, T.CORNER_TR,
@@ -449,24 +452,25 @@ const levels = [
       { r: 2, c: 6, t: T.CORNER_TR },
       { r: 3, c: 6, t: T.STRAIGHT_V },
       { r: 4, c: 6, t: T.STRAIGHT_V },
-      { r: 5, c: 6, t: T.CORNER_BL },
-      { r: 5, c: 7, t: T.STRAIGHT_H },
+      { r: 5, c: 6, t: T.STRAIGHT_V },
+      { r: 6, c: 6, t: T.CORNER_BL },
+      { r: 6, c: 7, t: T.STRAIGHT_H },
+      { r: 6, c: 8, t: T.STRAIGHT_H },
     ],
-    reward: 100,
+    reward: 120,
     obstacles: [
-      { r: 1, c: 2 }, { r: 1, c: 4 }, { r: 1, c: 6 },
+      { r: 1, c: 2 }, { r: 1, c: 4 }, { r: 1, c: 6 }, { r: 1, c: 8 },
       { r: 3, c: 0 }, { r: 3, c: 8 },
       { r: 5, c: 2 }, { r: 5, c: 4 },
-      { r: 7, c: 3 }, { r: 7, c: 5 },
-      { r: 0, c: 1, type: 'lava' }, { r: 8, c: 8, type: 'lava' },
+      { r: 7, c: 3 }, { r: 7, c: 5 }, { r: 7, c: 7 },
+      { r: 0, c: 1, type: 'lava' }, { r: 9, c: 9, type: 'lava' },
     ],
   },
-  // Level 15 - The wall gauntlet (10x10, boss level)
-  // Path: (4,0)S → (4,1)— → (4,2)— → (4,3)┐ → (5,3)│ → (6,3)└ → (6,4)— → (6,5)┘ → (5,5)│ → (4,5)│ → (3,5)└ → (3,6)— → (3,7)┐ → (4,7)│ → (5,7)│ → (6,7)│ → (7,7)└ → (7,8)— → (7,9)E
+  // Level 15 - The inferno (11x11, boss level)
   {
-    gridW: 10, gridH: 10,
-    start: { r: 4, c: 0 },
-    end: { r: 7, c: 9 },
+    gridW: 11, gridH: 11,
+    start: { r: 5, c: 0 },
+    end: { r: 8, c: 10 },
     givenBlocks: [
       T.STRAIGHT_H, T.STRAIGHT_H, T.STRAIGHT_H, T.CORNER_TR,
       T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H, T.CORNER_BR,
@@ -475,32 +479,34 @@ const levels = [
       T.STRAIGHT_V, T.STRAIGHT_V, T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H,
     ],
     solution: [
-      { r: 4, c: 1, t: T.STRAIGHT_H },
-      { r: 4, c: 2, t: T.STRAIGHT_H },
-      { r: 4, c: 3, t: T.CORNER_TR },
-      { r: 5, c: 3, t: T.STRAIGHT_V },
-      { r: 6, c: 3, t: T.CORNER_BL },
-      { r: 6, c: 4, t: T.STRAIGHT_H },
-      { r: 6, c: 5, t: T.CORNER_BR },
+      { r: 5, c: 1, t: T.STRAIGHT_H },
+      { r: 5, c: 2, t: T.STRAIGHT_H },
+      { r: 5, c: 3, t: T.CORNER_TR },
+      { r: 6, c: 3, t: T.STRAIGHT_V },
+      { r: 7, c: 3, t: T.CORNER_BL },
+      { r: 7, c: 4, t: T.STRAIGHT_H },
+      { r: 7, c: 5, t: T.CORNER_BR },
+      { r: 6, c: 5, t: T.STRAIGHT_V },
       { r: 5, c: 5, t: T.STRAIGHT_V },
-      { r: 4, c: 5, t: T.STRAIGHT_V },
-      { r: 3, c: 5, t: T.CORNER_BL },
-      { r: 3, c: 6, t: T.STRAIGHT_H },
-      { r: 3, c: 7, t: T.CORNER_TR },
-      { r: 4, c: 7, t: T.STRAIGHT_V },
+      { r: 4, c: 5, t: T.CORNER_BL },
+      { r: 4, c: 6, t: T.STRAIGHT_H },
+      { r: 4, c: 7, t: T.CORNER_TR },
       { r: 5, c: 7, t: T.STRAIGHT_V },
       { r: 6, c: 7, t: T.STRAIGHT_V },
-      { r: 7, c: 7, t: T.CORNER_BL },
-      { r: 7, c: 8, t: T.STRAIGHT_H },
+      { r: 7, c: 7, t: T.STRAIGHT_V },
+      { r: 8, c: 7, t: T.CORNER_BL },
+      { r: 8, c: 8, t: T.STRAIGHT_H },
+      { r: 8, c: 9, t: T.STRAIGHT_H },
     ],
-    reward: 150,
+    reward: 200,
     obstacles: [
-      { r: 2, c: 2 }, { r: 2, c: 4 }, { r: 2, c: 6 }, { r: 2, c: 8 },
-      { r: 4, c: 4 }, { r: 4, c: 6 },
-      { r: 6, c: 1 }, { r: 6, c: 9 },
-      { r: 8, c: 3 }, { r: 8, c: 5 }, { r: 8, c: 7 },
+      { r: 2, c: 3 }, { r: 2, c: 5 }, { r: 2, c: 7 }, { r: 2, c: 9 },
+      { r: 5, c: 4 }, { r: 5, c: 6 },
+      { r: 7, c: 1 }, { r: 7, c: 10 },
+      { r: 9, c: 4 }, { r: 9, c: 6 }, { r: 9, c: 8 },
       { r: 0, c: 5 },
-      { r: 5, c: 0, type: 'lava' }, { r: 9, c: 4, type: 'lava' },
+      { r: 3, c: 2, type: 'lava' }, { r: 6, c: 0, type: 'lava' },
+      { r: 10, c: 6, type: 'lava' },
     ],
   },
 ];
