@@ -430,7 +430,7 @@ const levels = [
     start: { r: 0, c: 0 },
     end: { r: 6, c: 9 },
     givenBlocks: [
-      T.STRAIGHT_V,
+      T.STRAIGHT_V, T.STRAIGHT_V,
       T.CORNER_TR, T.STRAIGHT_H, T.CORNER_TR,
       T.STRAIGHT_V, T.CORNER_BL, T.STRAIGHT_H,
       T.CORNER_BR, T.STRAIGHT_V, T.CORNER_BL,
