@@ -1304,6 +1304,13 @@ function setPlayerName() {
     notify('Nama minimal 1 karakter!');
     return;
   }
+  if (isNameTaken(name) && !isCurrentPlayer(name)) {
+    Sound.error();
+    notify('Nama "' + name + '" sudah dipakai!');
+    input.value = '';
+    input.focus();
+    return;
+  }
   savePlayerNameToStorage(name);
   document.getElementById('name-modal').classList.add('hidden');
   updatePlayerNameDisplay();

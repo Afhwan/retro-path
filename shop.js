@@ -15,6 +15,17 @@ function savePlayerNameToStorage(name) {
   return true;
 }
 
+function isNameTaken(name) {
+  const key = 'retro_path_shop_' + name.trim();
+  try {
+    return localStorage.getItem(key) !== null;
+  } catch { return false; }
+}
+
+function isCurrentPlayer(name) {
+  return getPlayerName().toLowerCase() === name.trim().toLowerCase();
+}
+
 function getShopKey() {
   const name = getPlayerName();
   return 'retro_path_shop_' + (name || 'default');
