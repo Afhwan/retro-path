@@ -726,9 +726,9 @@ function renderGrid() {
 function drawPathTile(x, y, tile, color) {
   const cx = x + CELL / 2;
   const cy = y + CELL / 2;
-  const hw = CELL / 2 - 6;
-  const hh = CELL / 2 - 6;
-  const lw = 6; // line width
+  const hw = CELL / 2 - 3;  // lebih panjang — nyaris ke tepi
+  const hh = CELL / 2 - 3;
+  const lw = 10; // garis tebal
 
   ctx.fillStyle = '#1e2a4a';
   ctx.fillRect(x + 2, y + 2, CELL - 4, CELL - 4);
@@ -765,11 +765,11 @@ function drawPathTile(x, y, tile, color) {
     ctx.stroke();
   }
 
-  // Corner dot
+  // Center dot for non-straight tiles
   if (tile !== T.STRAIGHT_H && tile !== T.STRAIGHT_V) {
     ctx.fillStyle = color;
     ctx.beginPath();
-    ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+    ctx.arc(cx, cy, 5, 0, Math.PI * 2);
     ctx.fill();
   }
 }
@@ -813,19 +813,19 @@ function drawCharacter(col, row) {
   };
   const color = costumeColors[data.activeCostume?.replace('costume_', '')] || '#ff6b35';
 
-  // Body
+  // Body — lebih besar
   ctx.fillStyle = color;
-  ctx.fillRect(x - 8, y - 8, 16, 16);
+  ctx.fillRect(x - 11, y - 11, 22, 22);
 
   // Eyes
   ctx.fillStyle = '#fff';
-  ctx.fillRect(x - 5, y - 5, 4, 4);
-  ctx.fillRect(x + 1, y - 5, 4, 4);
+  ctx.fillRect(x - 7, y - 6, 5, 5);
+  ctx.fillRect(x + 2, y - 6, 5, 5);
 
   // Eyes inner
   ctx.fillStyle = '#000';
-  ctx.fillRect(x - 4, y - 4, 2, 2);
-  ctx.fillRect(x + 2, y - 4, 2, 2);
+  ctx.fillRect(x - 6, y - 5, 3, 3);
+  ctx.fillRect(x + 3, y - 5, 3, 3);
 }
 
 // ─── Draw Pixel Text ────────────────────────────────
