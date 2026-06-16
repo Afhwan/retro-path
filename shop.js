@@ -11,11 +11,6 @@ const shopProducts = {
     { id: 'gem_small',   name: 'Kecil Permata',   desc: 'Dapatkan 10 permata',         icon: '💎', price: 2000, currency: 'real',  value: 10,   type: 'gems' },
     { id: 'gem_medium',  name: 'Sedang Permata',  desc: 'Dapatkan 50 permata',         icon: '💎', price: 9000, currency: 'real',  value: 50,   type: 'gems' },
   ],
-  packs: [
-    { id: 'pack_adv',    name: 'Paket Lanjutan',  desc: 'Buka level 11-20',             icon: '📦', price: 500,  currency: 'gems',  value: 'levels_11_20' },
-    { id: 'pack_expert', name: 'Paket Expert',    desc: 'Buka level 21-35',             icon: '📦', price: 1200, currency: 'gems',  value: 'levels_21_35' },
-    { id: 'pack_master', name: 'Paket Master',    desc: 'Buka level 36-50',             icon: '📦', price: 2500, currency: 'gems',  value: 'levels_36_50' },
-  ],
   hints: [
     { id: 'hint_1',      name: '1 Petunjuk',      desc: 'Lihat 1 langkah benar',        icon: '💡', price: 200,  currency: 'coins', value: 1 },
     { id: 'hint_5',      name: '5 Petunjuk',      desc: 'Lihat 5 langkah benar',        icon: '💡', price: 800,  currency: 'coins', value: 5 },
