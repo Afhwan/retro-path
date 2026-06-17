@@ -1380,6 +1380,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initLevel(0);
   animateLava();
   
+  // Sembunyiin tombol UNDUH kalau dijalankan lewat Electron (desktop app)
+  if (navigator.userAgent.includes('Electron')) {
+    const btn = document.getElementById('menuDownloadBtn');
+    if (btn) btn.style.display = 'none';
+  }
+  
   // Cek nama pemain
   const name = getPlayerName();
   if (!name) {
